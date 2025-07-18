@@ -3,2394 +3,929 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOMM DIGI - The Wine Aroma Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>SOMM DIGI | Wine Aroma Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #F9FAFB;
+            --bg-color: #FFFFFF;
+            --text-color: #111827;
             --brand-burgundy: #5C2C3B;
-            --text-cream: #F5F3EF;
-            --text-dark: #111827;
-            --accent-green: #34D399;
-            --glass-bg: rgba(249, 250, 251, 0.85);
-            --glass-border: rgba(92, 44, 59, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --cream-text: #F5F3EF;
+            --yellow-accent: #FFD700;
+            --font-title: 'Cormorant Garamond', serif;
+            --font-body: 'Inter', sans-serif;
+            --border-color: #E5E7EB;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
         }
 
-        h1, h2, h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 500;
-            line-height: 1.2;
+        .app-wrapper {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
-
-        /* Animated Gradient Background */
-        .gradient-bg {
+        
+        #dynamic-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, 
-                rgba(92, 44, 59, 0.03), 
-                rgba(245, 243, 239, 0.05), 
-                rgba(255, 182, 193, 0.03),
-                rgba(92, 44, 59, 0.02));
+            z-index: 0;
+            background: linear-gradient(125deg, #fde8d0, #fbcfe8, #ffffff, #fde8d0);
             background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
+            animation: gradient-animation 25s ease infinite;
         }
 
-        @keyframes gradientShift {
+        @keyframes gradient-animation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Landing Page */
-        .landing {
+        .container {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 2rem;
-            animation: fadeIn 1s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
         }
 
-        @keyframes fadeIn {
+        .container.is-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- Landing Page --- */
+        #landing-container {
+            justify-content: center;
+        }
+        
+        .landing-content {
+            text-align: center;
+            animation: fadeInSlideUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+            position: relative;
+        }
+        
+        @keyframes fadeInSlideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .landing h1 {
-            font-size: clamp(3rem, 8vw, 4.5rem);
-            margin-bottom: 1rem;
-            color: var(--brand-burgundy);
+        
+        #landing-container .main-title {
+            font-family: var(--font-title);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-color);
+            letter-spacing: -1.5px;
+            line-height: 1.2;
         }
 
-        .landing p {
-            font-size: 1.25rem;
-            margin-bottom: 3rem;
-            color: #6B7280;
-            max-width: 600px;
+        #landing-container .subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-top: 15px;
+            color: #4B5563;
+            max-width: 480px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .cta-container {
+        
+        #landing-container .cta-button-group {
+            margin-top: 40px;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            gap: 15px;
+            justify-content: center;
             align-items: center;
         }
-
-        .btn-primary {
-            background-color: var(--brand-burgundy);
-            color: var(--text-cream);
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+        
+        /* --- Dashboard Layout --- */
+        #dashboard-container {
+            flex-direction: row;
         }
 
-        .btn-primary:hover {
-            background-color: #4A2330;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(92, 44, 59, 0.2);
-        }
-
-        .secondary-links {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .secondary-links a {
-            color: var(--brand-burgundy);
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s ease;
-        }
-
-        .secondary-links a:hover {
-            opacity: 0.7;
-        }
-
-        /* Dashboard */
-        .dashboard {
-            display: none;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .dashboard-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
+        #dashboard-sidebar {
+            width: 280px;
             height: 100%;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: var(--glass-bg);
+            background: rgba(255,255,255,0.7);
             backdrop-filter: blur(10px);
-            border-right: 1px solid var(--glass-border);
-            padding: 2rem;
+            border-right: 1px solid var(--border-color);
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
         }
-
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--brand-burgundy);
-            margin-bottom: 3rem;
+        
+        .sidebar-logo {
+            font-family: var(--font-title);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
             cursor: pointer;
-            transition: opacity 0.3s ease;
         }
 
-        .logo:hover {
-            opacity: 0.8;
-        }
-
-        .category-nav h3 {
-            font-size: 1rem;
+        .sidebar-nav-title {
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .category-list {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .category-item {
-            padding: 0.75rem 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 6px;
-            padding-left: 1rem;
-        }
-
-        .category-item:hover {
-            background-color: rgba(92, 44, 59, 0.05);
-            color: var(--brand-burgundy);
-        }
-
-        .category-item.active {
-            background-color: rgba(92, 44, 59, 0.1);
-            color: var(--brand-burgundy);
-            font-weight: 500;
-        }
-
-        .subcategory-list {
-            list-style: none;
-            margin-left: 1.5rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .subcategory-list.open {
-            display: block;
-        }
-
-        .subcategory-item {
-            padding: 0.5rem 0;
-            font-size: 0.9rem;
             color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        
+        .sidebar-nav-item button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 12px 15px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            border-radius: 6px;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: background-color 0.2s, color 0.2s;
+            color: #374151;
+        }
+        
+        .sidebar-nav-item button:hover {
+            background-color: #F3F4F6;
+        }
+        
+        .sidebar-nav-item button.active {
+            background-color: var(--brand-burgundy);
+            color: var(--cream-text);
+            font-weight: 600;
         }
 
-        .subcategory-item:hover {
-            color: var(--brand-burgundy);
-        }
-
-        /* Main Content */
-        .main-content {
+        #dashboard-main {
+            flex-grow: 1;
+            height: 100%;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            background-color: var(--bg-color);
         }
 
-        .header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--glass-border);
+        #dashboard-header {
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .search-container {
-            position: relative;
-            flex: 1;
-            max-width: 400px;
-            min-width: 200px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #E5E7EB;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--brand-burgundy);
-            box-shadow: 0 0 0 3px rgba(92, 44, 59, 0.1);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--brand-burgundy);
-            border: 2px solid var(--brand-burgundy);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--brand-burgundy);
-            color: var(--text-cream);
-        }
-
-        /* Flashcard Grid */
-        .flashcard-grid-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .flashcard-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1.25rem;
-        }
-
-        @media (max-width: 1400px) {
-            .flashcard-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .flashcard-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .flashcard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .flashcard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .flashcard {
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid #E5E7EB;
-            position: relative;
-            aspect-ratio: 3/4;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            overflow: hidden;
-        }
-
-        .flashcard:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            border-color: var(--brand-burgundy);
-        }
-
-        .flashcard-category {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--brand-burgundy);
-            color: var(--text-cream);
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .flashcard-content {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            margin-top: 1.5rem;
-        }
-
-        .flashcard-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.75rem;
-            color: var(--brand-burgundy);
-            margin-bottom: 1rem;
+            background: rgba(248, 249, 250, 0.8);
+            backdrop-filter: blur(8px);
             flex-shrink: 0;
-            text-align: center;
+        }
+        
+        #search-bar {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            width: 300px;
+            background-color: var(--bg-color);
+        }
+        
+        .header-actions .btn {
+            margin-left: 15px;
         }
 
-        .flashcard-wines {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .wine-item {
-            font-size: 0.875rem;
-            color: var(--text-dark);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .wine-grape {
-            font-weight: 600;
-            color: var(--brand-burgundy);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
+        #aroma-grid {
+            flex-grow: 1;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
+        }
+        
+        .aroma-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+        }
+        
+        .aroma-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+            border-color: var(--brand-burgundy);
+        }
+        
+        .aroma-card-name {
+            font-size: 1.25rem;
+            font-weight: 600;
         }
 
-        @keyframes slideUp {
-            from { transform: translate(-50%, -45%); opacity: 0; }
-            to { transform: translate(-50%, -50%); opacity: 1; }
+        /* --- Detail Card Modal --- */
+        .modal-container {
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
         }
-
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 1px solid #E5E7EB;
+        .library-card-detail {
+            background: var(--cream-text);
+            color: var(--text-color);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
             position: relative;
         }
-
-        .modal-close {
+        .library-card-detail h3 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin-top: 0;
+            color: var(--brand-burgundy);
+        }
+        .library-card-detail ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .library-card-detail li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .library-card-detail .tip {
+            font-style: italic;
+            color: #4B5563;
+            margin-top: 20px;
+        }
+        #card-detail-close-btn {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
             background: none;
             border: none;
-            font-size: 1.5rem;
             cursor: pointer;
-            color: #6B7280;
-            transition: color 0.3s ease;
+        }
+        
+        /* --- Buttons --- */
+        .btn {
+            font-family: var(--font-body);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+        
+        .btn-primary-cta {
+            background: var(--brand-burgundy);
+            color: var(--cream-text);
+        }
+        .btn-primary-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(92, 44, 59, 0.2);
         }
 
-        .modal-close:hover {
-            color: var(--text-dark);
+        .btn-secondary-cta {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid #d1d5db;
         }
-
-        .modal-content {
-            padding: 2rem;
+        .btn-secondary-cta:hover {
+            transform: translateY(-3px);
+            border-color: var(--text-color);
         }
-
-        .modal h2 {
-            font-size: 2.5rem;
-            color: var(--brand-burgundy);
-            margin-bottom: 0.5rem;
+        
+        /* --- Quiz Modal --- */
+        #quiz-container, #result-container {
+            justify-content: center;
+            align-items: center;
         }
-
-        .modal-category {
-            color: #6B7280;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .wine-list {
-            margin-bottom: 2rem;
-        }
-
-        .wine-list h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .wine-list ul {
-            list-style: none;
-        }
-
-        .wine-list li {
-            padding: 0.5rem 0;
-            line-height: 1.6;
-        }
-
-        .wine-list strong {
-            color: var(--brand-burgundy);
-        }
-
-        .expert-tip {
-            background: rgba(92, 44, 59, 0.05);
-            border-left: 4px solid var(--brand-burgundy);
-            padding: 1.5rem;
-            border-radius: 8px;
-            font-style: italic;
-            color: var(--text-dark);
-        }
-
-        /* Quiz Modal */
         .quiz-modal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            background-color: var(--brand-burgundy);
+            color: var(--cream-text);
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
             max-width: 700px;
-            width: 90%;
-            padding: 2rem;
-            animation: slideUp 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
         }
-
+        
         .quiz-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            padding: 0 5px 15px 5px;
         }
 
-        .progress-bar {
-            flex: 1;
-            height: 8px;
-            background: rgba(92, 44, 59, 0.1);
-            border-radius: 4px;
-            margin-right: 2rem;
-            overflow: hidden;
+        .quit-button {
+            font-size: 2.5rem;
+            color: var(--cream-text);
         }
 
-        .progress-fill {
-            height: 100%;
-            background: var(--brand-burgundy);
-            border-radius: 4px;
-            transition: width 0.3s ease;
+        #progress-bar-full {
+            background-color: rgba(245, 243, 239, 0.3);
         }
 
-        .quiz-question {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.75rem;
+        #progress-bar-fill {
+            background-color: var(--cream-text);
+        }
+
+        #question-text {
+            font-family: var(--font-body);
+            font-size: 1.6rem;
+            line-height: 1.5;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 30px;
             text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
         }
 
-        .quiz-hint {
-            text-align: center;
-            color: #6B7280;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-
-        .answer-grid {
+        #answers-area {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
         .answer-btn {
-            background: white;
-            border: 2px solid #E5E7EB;
-            padding: 1.5rem;
-            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+            color: var(--cream-text);
+            border: 1px solid rgba(245, 243, 239, 0.2);
+            border-radius: 8px;
+            padding: 20px;
             font-size: 1.1rem;
+            font-family: var(--font-body);
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .answer-btn:hover:not(:disabled) {
-            border-color: var(--brand-burgundy);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(92, 44, 59, 0.1);
-        }
-
-        .answer-btn:disabled {
-            cursor: not-allowed;
+        .answer-btn:hover:not([disabled]) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
         }
 
         .answer-btn.correct {
-            background: var(--accent-green);
-            border-color: var(--accent-green);
-            color: white;
-            animation: pulse 0.5s ease;
+            background: var(--yellow-accent);
+            color: var(--text-color);
+            border-color: var(--yellow-accent);
+            animation: pulse 0.6s ease;
         }
 
         .answer-btn.incorrect {
             animation: shake 0.5s ease;
-            border-color: #EF4444;
-            background: #FEE2E2;
+        }
+
+        .answer-btn[disabled] {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
+            0% { transform: scale(1); }
             50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
         }
 
-        /* Results Page */
-        .results-container {
-            text-align: center;
-            padding: 3rem 2rem;
+        /* --- Result Screen --- */
+        #result-title {
+            font-size: 2.5rem;
+            color: var(--cream-text);
+            font-family: var(--font-title);
+        }
+        #score-text {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #result-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn-result {
+            padding: 15px 30px;
+            font-size: 1.1rem;
         }
 
-        .results-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--brand-burgundy);
-        }
-
-        .results-message {
-            font-size: 1.25rem;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            color: var(--text-dark);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .results-cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: none;
-                position: fixed;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 280px;
-                z-index: 999;
-            }
-
-            .sidebar.mobile-open {
-                display: block;
-            }
-
-            .header {
-                padding: 1rem;
-            }
-
-            .header-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .answer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .mobile-menu-btn {
-                display: none;
-            }
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 900px) {
+            #dashboard-container { flex-direction: column; }
+            #dashboard-sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .sidebar-logo { display: none; }
+            .sidebar-nav-title { display: none; }
+            .sidebar-nav { display: flex; gap: 10px; margin: 0; }
+            .sidebar-nav-item button { white-space: nowrap; }
+            #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
+            #search-bar { width: 100%; }
+            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .quiz-modal { padding: 20px; }
+            #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
+            #answers-area { grid-template-columns: 1fr; }
+            .answer-btn { padding: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="gradient-bg"></div>
+    <div class="app-wrapper">
+        <div id="dynamic-background"></div>
 
-    <!-- Landing Page -->
-    <div class="landing" id="landing">
-        <h1>Unlock Your Palate</h1>
-        <p>Master the art of wine tasting with our interactive aroma library and engaging quiz game</p>
-        <div class="cta-container">
-            <button class="btn-primary" onclick="showDashboard()">Explore the Aroma Library</button>
-            <div class="secondary-links">
-                <a href="https://amzn.to/46K1mrB" target="_blank">Get the Cards on Amazon</a>
-                <a href="#" onclick="alert('Blog coming soon!')">Read the Blog</a>
+        <!-- Landing Page Container -->
+        <div id="landing-container" class="container is-visible">
+             <div class="landing-content">
+                <h1 class="main-title">SOMM DIGI Wine Aromas</h1>
+                <h2 class="subtitle">Enjoy Wine Aromas Somm Digi to improve your wine aromas memory in a fun way.</h2>
+                <div class="cta-button-group">
+                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta">Get Cards on Amazon</a>
+                    <button id="play-game-btn-landing" class="btn btn-secondary-cta">Play the Game</button>
+                    <button id="explore-library-btn" class="btn btn-secondary-cta">Aroma Library</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <div class="dashboard-layout">
-            <!-- Sidebar -->
-            <aside class="sidebar" id="sidebar">
-                <div class="logo" onclick="showLanding()">SOMM DIGI</div>
-                <nav class="category-nav">
-                    <h3>Categories</h3>
-                    <ul class="category-list">
-                        <li class="category-item active" onclick="filterCategory('all')">All Aromas</li>
-                        <li class="category-item" onclick="toggleSubcategories('fruit')">
-                            Fruit
-                            <ul class="subcategory-list" id="fruit-sub">
-                                <li class="subcategory-item" onclick="filterSubcategory('red')">Red Fruit</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('black')">Black Fruit</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('citrus')">Citrus</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('tree')">Tree Fruit</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('tropical')">Tropical</li>
-                            </ul>
-                        </li>
-                        <li class="category-item" onclick="toggleSubcategories('earth')">
-                            From the Earth
-                            <ul class="subcategory-list" id="earth-sub">
-                                <li class="subcategory-item" onclick="filterSubcategory('floral')">Floral</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('herbal')">Herbal</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('earthy')">Earthy</li>
-                                <li class="subcategory-item" onclick="filterSubcategory('mineral')">Mineral</li>
-                            </ul>
-                        </li>
-                        <li class="category-item" onclick="toggleSubcategories('winemaking')">
-                            Winemaking
-                            <ul class="subcategory-list" id="winemaking-sub">
-                                <li class="subcategory-item" onclick="filterSubcategory('spice-oak')">Spice & Oak</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="main-content">
-                <header class="header">
-                    <button class="mobile-menu-btn btn-secondary" onclick="toggleMobileMenu()">☰</button>
-                    <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search aromas..." oninput="searchAromas(this.value)">
-                    </div>
+        <!-- Dashboard Container -->
+        <div id="dashboard-container" class="container">
+            <div id="dashboard-sidebar">
+                <div class="sidebar-logo">SOMM DIGI</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-title">Categories</li>
+                    <li class="sidebar-nav-item"><button class="filter-btn active" data-category="all">All Aromas</button></li>
+                </ul>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-title">Fruit</li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Red Fruit">Red Fruit</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Black Fruit">Black Fruit</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Citrus Fruit">Citrus Fruit</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tree Fruit">Tree Fruit</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tropical Fruit">Tropical Fruit</button></li>
+                </ul>
+                 <ul class="sidebar-nav">
+                    <li class="sidebar-nav-title">From the Earth</li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Floral">Floral</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Herbal">Herbal</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Earthy">Earthy</button></li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Mineral">Mineral</button></li>
+                </ul>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-title">Winemaking</li>
+                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Spice & Oak">Spice & Oak</button></li>
+                </ul>
+            </div>
+            <div id="dashboard-main">
+                <div id="dashboard-header">
+                    <input type="text" id="search-bar" placeholder="Search for an aroma...">
                     <div class="header-actions">
-                        <button class="btn-secondary" onclick="startQuiz()">Play the Game</button>
-                        <a href="https://amzn.to/46K1mrB" target="_blank" class="btn-primary">Get the Cards</a>
-                    </div>
-                </header>
-
-                <div class="flashcard-grid-container">
-                    <div class="flashcard-grid" id="flashcardGrid">
-                        <!-- Flashcards will be dynamically inserted here -->
+                        <button id="play-game-btn" class="btn btn-secondary-cta">Play the Game</button>
+                        <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta">Get the Cards</a>
                     </div>
                 </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Aroma Detail Modal -->
-    <div class="modal-overlay" id="aromaModal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal('aromaModal')">×</button>
-                <h2 id="modalAromaName"></h2>
-                <p class="modal-category" id="modalAromaCategory"></p>
-            </div>
-            <div class="modal-content">
-                <div class="wine-list">
-                    <h3>Associated Wines</h3>
-                    <ul id="modalWineList"></ul>
-                </div>
-                <div class="expert-tip" id="modalExpertTip"></div>
+                <div id="aroma-grid"></div>
             </div>
         </div>
-    </div>
 
-    <!-- Quiz Modal -->
-    <div class="modal-overlay" id="quizModal">
-        <div class="quiz-modal">
-            <div class="quiz-header">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="container">
+             <div class="quiz-modal">
+                <div class="quiz-content">
+                    <div class="quiz-header">
+                        <div id="progress-bar-full">
+                            <div id="progress-bar-fill"></div>
+                        </div>
+                        <button id="quit-btn" class="quit-button">&times;</button>
+                    </div>
+                    <div id="question-area">
+                        <p id="question-text"></p>
+                    </div>
+                    <div id="answers-area"></div>
                 </div>
-                <button class="btn-secondary" onclick="quitQuiz()">Quit</button>
-            </div>
-            <h2 class="quiz-question" id="quizQuestion"></h2>
-            <p class="quiz-hint" id="quizHint"></p>
-            <div class="answer-grid" id="answerGrid">
-                <!-- Answer buttons will be dynamically inserted -->
             </div>
         </div>
-    </div>
 
-    <!-- Results Modal -->
-    <div class="modal-overlay" id="resultsModal">
-        <div class="modal">
-            <div class="results-container">
-                <h2 class="results-title" id="resultsTitle"></h2>
-                <p class="results-message" id="resultsMessage"></p>
-                <div class="results-cta">
-                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn-primary">Continue Your Journey</a>
-                    <button class="btn-secondary" onclick="playAgain()">Play Again</button>
+        <!-- Result Screen Container -->
+        <div id="result-container" class="container">
+            <div class="quiz-modal">
+                <div class="quiz-content">
+                    <h2 id="result-title"></h2>
+                    <p id="score-text"></p>
+                    <p id="result-message"></p>
+                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta btn-result">Continue Your Journey</a>
+                    <button id="play-again-btn" class="btn btn-result-secondary btn-result">Play Again</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Aroma Card Detail Modal -->
+        <div id="library-card-detail-container" class="container modal-container">
+            <div class="library-card-detail">
+                <button id="card-detail-close-btn">&times;</button>
+                <h3 id="card-detail-title"></h3>
+                <ul id="card-detail-wines"></ul>
+                <p class="tip" id="card-detail-tip"></p>
             </div>
         </div>
     </div>
 
     <script>
-        // Complete aroma data from the document
-        const aromaData = [
-            // RED FRUIT
-            {
-                name: "Strawberry",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Pinot Noir", description: "Subtle strawberry, elegant styles (France, New World)" },
-                    { grape: "Sangiovese", description: "Youthful, expressive red fruit (Chianti, Italy)" },
-                    { grape: "Zinfandel", description: "Bold, ripe strawberry notes (Lodi, USA)" },
-                    { grape: "Tempranillo", description: "Balanced red fruit, lightly oaked (Rioja, Spain)" },
-                    { grape: "Grenache", description: "Vibrant, juicy strawberry tones (Rhône, France)" },
-                    { grape: "Gamay", description: "Fresh and bright red fruit (Beaujolais, France)" }
-                ],
-                tip: "Strawberry aromas often resemble fresh berries or strawberry jam—think summer fruit bowls."
-            },
-            {
-                name: "Raspberries",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Zinfandel", description: "Fresh, fruit-driven (Lodi, Central Coast, USA)" },
-                    { grape: "Shiraz", description: "Ripe to overripe, spicy red fruit (Eden Valley, Australia)" },
-                    { grape: "Grenache", description: "Juicy and ripe, found in Rhône (France) and Barossa (Australia)" },
-                    { grape: "Pinot Noir", description: "Fresh and bright (Oregon, USA; Burgundy, France)" }
-                ],
-                tip: "Raspberry aromas are easy to spot—think fresh, tangy, or slightly sweet raspberries, like a summer fruit tart."
-            },
-            {
-                name: "Red Currant & Cranberry",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Sangiovese", description: "Youthful red fruit (Chianti, Italy)" },
-                    { grape: "Pinot Noir", description: "Tart and fresh (Burgundy, France)" },
-                    { grape: "Gamay", description: "Bright, lively (Beaujolais Cru, France)" },
-                    { grape: "Nebbiolo", description: "Found in young styles (Piemote, Italy)" },
-                    { grape: "Grenache Blends", description: "Tart red fruit (Côtes du Rhône, France)" }
-                ],
-                tip: "Red currant and cranberry aromas often indicate youthful, vibrant wines."
-            },
-            {
-                name: "Pomegranate",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Pinot Noir", description: "Youthful, tangy (Marlborough, NZ; Mornington Peninsula, AU)" },
-                    { grape: "Sangiovese", description: "Fresh, vibrant (Chianti, Italy)" },
-                    { grape: "Zinfandel", description: "Juicy and lively (Central Valley, Lodi, USA)" }
-                ],
-                tip: "Pomegranate aromas highlight freshness and tanginess in youthful red wines."
-            },
-            {
-                name: "Cherry",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Pinot Noir", description: "Rich styles (Worldwide)" },
-                    { grape: "Dolcetto", description: "Fruit-forward (DOCG, Italy)" },
-                    { grape: "Pinotage", description: "Bold and ripe (Stellenbosch, South Africa)" },
-                    { grape: "Zinfandel", description: "Jammy and mature (USA)" },
-                    { grape: "Tempranillo", description: "Light oak, vibrant (Rioja, Spain)" },
-                    { grape: "Gamay", description: "Bright and youthful (Beaujolais Nouveau, France)" },
-                    { grape: "Chianti Classico", description: "Lively and tart (Italy)" }
-                ],
-                tip: "Cherry aromas range from bold in mature wines to tangy in youthful wines."
-            },
-            {
-                name: "Red Plum (Fresh)",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Merlot", description: "Juicy and soft (Bordeaux Right Bank; Napa Valley, USA; Central Valley, Chile)" },
-                    { grape: "Malbec", description: "Rich and ripe (Uco Valley, Argentina)" },
-                    { grape: "Grenache & Blends", description: "Fruity and lush (Southern Rhône Valley, France)" },
-                    { grape: "Nebbiolo", description: "Fresh and vibrant (Langhe DOC, Piedmont, Italy)" }
-                ],
-                tip: "Red plum aromas are often present in approachable, fruit-forward red wines."
-            },
-            {
-                name: "Red Plum (Ripe to Cooked)",
-                category: "Fruit",
-                subcategory: "red",
-                wines: [
-                    { grape: "Corvina Blends", description: "Vibrant and ripe (Veneto, Italy)" },
-                    { grape: "Pinotage", description: "Bold and earthy (Stellenbosch, South Africa)" },
-                    { grape: "Syrah/Shiraz", description: "Ripe and spicy (Barossa Valley, Australia)" },
-                    { grape: "Merlot", description: "Smooth and juicy (Central Valley, Chile)" }
-                ],
-                tip: "Red plum aromas, from ripe to cooked, are often found in rich, bold wines."
-            },
-            // BLACK FRUIT
-            {
-                name: "Black Currant (Cassis)",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Primary aroma (Worldwide)" },
-                    { grape: "Cabernet Franc", description: "Ripe and concentrated (France, USA)" },
-                    { grape: "Malbec", description: "Rich and ripe (Argentina)" },
-                    { grape: "Regions", description: "Bordeaux is famous for cassis notes in its wines (France)" }
-                ],
-                tip: "Black currant aromas (cassis) often signal wines with great aging potential."
-            },
-            {
-                name: "Black Cherry",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Valpolicella Ripasso & Amarone", description: "Rich and layered (Italy)" },
-                    { grape: "Merlot & Carménère", description: "Deep and fruity (Chile)" },
-                    { grape: "Tempranillo", description: "Prominent in Rioja Reservas (Spain)" },
-                    { grape: "Barbera", description: "Tart and vibrant (Piedmont, Italy)" },
-                    { grape: "Southern Rhône Blends", description: "Complex and structured (Châteauneuf-du-Pape, France)" }
-                ],
-                tip: "Black cherry aromas often indicate wines with aging potential, developing richer and smoother with time."
-            },
-            {
-                name: "Dark Plum",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Merlot", description: "Lush, dark plum flavors dominate (Napa Valley, USA)" },
-                    { grape: "Corvina Blends", description: "Rich plum notes, especially in Amarone (Valpolicella, Italy)" },
-                    { grape: "Malbec", description: "Ripe, concentrated dark plum character (Argentina)" },
-                    { grape: "Pinotage", description: "Bold, smoky dark plum undertones (South Africa)" }
-                ],
-                tip: "Dark plum aromas often signal a velvety, full-bodied wine—think smooth textures and bold flavors."
-            },
-            {
-                name: "Blackberries",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Cooler vintages (Worldwide)" },
-                    { grape: "Cabernet Franc", description: "Cooler climates (France, USA)" },
-                    { grape: "Carménère", description: "Common in cooler regions (Chile)" }
-                ],
-                tip: "Blackberry aromas are often linked to wines from cooler climates or vintages, giving them a fresh and vibrant character."
-            },
-            {
-                name: "Black Elderberries",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Malbec", description: "Higher altitude (Argentina)" },
-                    { grape: "Shiraz", description: "Barossa Valley (Australia)" }
-                ],
-                tip: "Black elderberry aromas are often found in wines that range from medium to full-bodied, with higher altitude or warmer climate wines contributing to a more concentrated and complex flavor profile."
-            },
-            {
-                name: "Black Raspberries",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "Shiraz", description: "Intense black raspberry with a spicy edge (Barossa Valley, Australia)" },
-                    { grape: "Malbec", description: "Juicy, ripe black raspberry in full-bodied styles (Mendoza, Argentina)" }
-                ],
-                tip: "Black raspberry aromas often highlight ripe, bold fruit profiles, commonly found in wines from warm climates with concentrated flavors."
-            },
-            {
-                name: "Blueberries",
-                category: "Fruit",
-                subcategory: "black",
-                wines: [
-                    { grape: "High-End Bordeaux Blends", description: "Especially left bank (France)" },
-                    { grape: "Cabernet Sauvignon", description: "Coonawarra (Australia)" },
-                    { grape: "Top Quality Malbec", description: "High altitude expression (Argentina)" },
-                    { grape: "Cabernet Franc", description: "Loire, e.g., Chinon, Saumur (France)" }
-                ],
-                tip: "Blueberry aromas are often found in wines from cooler or higher altitude regions, adding a lush and refined fruit character."
-            },
-            // FLORAL
-            {
-                name: "Jasmine",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Torrontés", description: "Salta (Argentina)" },
-                    { grape: "Muscat", description: "Alsace (France)" }
-                ],
-                tip: "Jasmine aromas are prominent in aromatic white wines. In Salta, high altitude enhances floral intensity, while in Alsace, the region's unique climate and terroir bring out Muscat's delicate floral notes."
-            },
-            {
-                name: "Honeysuckle",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Bordeaux Blends", description: "Sauternes AOP, Sauvignon Blanc & Sémillon (France)" },
-                    { grape: "Viognier", description: "Condrieu (France)" }
-                ],
-                tip: "Honeysuckle aromas are prominent in sweet Bordeaux wines like Sauternes and in Viognier from Condrieu, where the grape's natural floral character is enhanced by the region's unique terroir."
-            },
-            {
-                name: "Elderflower",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Found in both Old World (e.g., Loire Valley, France) and New World regions (e.g., Marlborough, New Zealand)" }
-                ],
-                tip: "Elderflower aromas are a signature of Sauvignon Blanc, with Old World expressions showing more subtle, mineral-driven floral notes, while New World examples, like those from Marlborough, often have more vibrant and pronounced elderflower character."
-            },
-            {
-                name: "Rose",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Grenache", description: "Southern Rhône (France)" },
-                    { grape: "Pinot Noir", description: "Burgundy (France) and cooler regions (Worldwide)" },
-                    { grape: "Nebbiolo", description: "Barolo & Barbaresco (Italy)" },
-                    { grape: "Gewürztraminer", description: "Alsace (France)" },
-                    { grape: "Pinot Gris", description: "Alsace (France)" }
-                ],
-                tip: "Rose aromas are found in both red and aromatic white wines. Nebbiolo and Pinot Noir present these notes subtly, while Gewürztraminer and Pinot Gris from Alsace offer a more pronounced floral character."
-            },
-            {
-                name: "Lily",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Pinot Grigio", description: "Trentino DOC (Italy)" },
-                    { grape: "Viognier", description: "Condrieu (France)" },
-                    { grape: "Chenin Blanc", description: "Vouvray (Loire Valley, France)" }
-                ],
-                tip: "Lily aromas are delicate and often found in aromatic white wines. Viognier from Condrieu and Chenin Blanc from Vouvray showcase these floral notes beautifully, adding elegance to the wine's profile."
-            },
-            {
-                name: "Linden",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Riesling", description: "Riper styles from Pfalz (Germany), Alsace (France), and Wachau (Austria)" },
-                    { grape: "Chardonnay", description: "Burgundy (France)" },
-                    { grape: "Petit Manseng", description: "Jurançon (France)" }
-                ],
-                tip: "Linden aromas are common in riper white wines, offering a subtle floral complexity. Burgundy Chardonnay adds a refined floral note, while Petit Manseng from Jurançon delivers a rich, aromatic profile."
-            },
-            {
-                name: "Acacia",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Vermentino", description: "Corsica (France)" },
-                    { grape: "Malvasia Istriana", description: "Croatia" },
-                    { grape: "Chenin Blanc", description: "Loire Valley (France)" },
-                    { grape: "Chardonnay", description: "Burgundy (France), Sonoma Coast (USA)" }
-                ],
-                tip: "Acacia aromas can be enhanced by using acacia wood barrels, which add subtle floral notes, especially to white wines like Chardonnay."
-            },
-            {
-                name: "Chamomile",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Chenin Blanc", description: "Stellenbosch, Swartland, Paarl (South Africa)" },
-                    { grape: "Viognier", description: "Condrieu (France)" },
-                    { grape: "Chasselas", description: "Predominantly from Switzerland" },
-                    { grape: "Grechetto", description: "Italy" },
-                    { grape: "Arneis", description: "Piedmont (Italy)" }
-                ],
-                tip: "Chamomile aromas add a soft, herbal complexity to these wines. They can be found in both youthful expressions and more aged wines, with the floral notes often evolving beautifully over time."
-            },
-            {
-                name: "Lemon Blossom",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Viognier", description: "Known for its aromatic and floral profile" },
-                    { grape: "Aromatic Chardonnay", description: "Especially with little to no oak influence (Worldwide)" }
-                ],
-                tip: "Lemon blossom aromas add a delicate, citrusy floral note to wines. Viognier showcases this naturally, while unoaked or lightly oaked Chardonnay highlights the freshness and purity of the aroma."
-            },
-            {
-                name: "Lime Blossom",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Riesling", description: "Particularly from Eden Valley and Clare Valley (Australia)" }
-                ],
-                tip: "Lime blossom aromas are a hallmark of Australian Rieslings, especially from Eden and Clare Valley. These wines often feature bright acidity and a refreshing, floral-citrus character."
-            },
-            {
-                name: "Orange Blossom",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Muscat", description: "Intense orange blossom with citrus highlights (global styles)" },
-                    { grape: "Viognier", description: "Offers a lush, floral profile" },
-                    { grape: "Aromatic Chardonnay", description: "Especially in unoaked or lightly oaked styles" }
-                ],
-                tip: "Orange blossom aromas add a fragrant, citrusy elegance to wines. Muscat provides a vivid expression, while Viognier and aromatic Chardonnay bring a softer, balanced floral note."
-            },
-            {
-                name: "Violets",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Cabernet Family", description: "Includes Cabernet Sauvignon and Cabernet Franc (Worldwide)" },
-                    { grape: "Malbec", description: "Riper expressions (Argentina)" },
-                    { grape: "Nebbiolo", description: "Riper styles, especially from Barolo and Barbaresco (Italy)" }
-                ],
-                tip: "Violets add floral elegance to structured reds, especially in balanced or cooler vintages."
-            },
-            {
-                name: "Iris",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Sangiovese", description: "From Tuscany, e.g., Chianti (Italy)" },
-                    { grape: "Syrah", description: "From Crozes-Hermitage (France)" }
-                ],
-                tip: "Iris aromas add a subtle, elegant floral touch, often found in structured wines like Chianti and Northern Rhône Syrah, enhancing their complexity."
-            },
-            {
-                name: "Geranium",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Malbec", description: "Mendoza (Argentina)" }
-                ],
-                tip: "Geranium aromas in Malbec can add a distinctive herbal-floral note, often found in youthful or unoaked expressions, giving the wine an aromatic lift."
-            },
-            {
-                name: "Lavender",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Grape Varieties", description: "Grenache, Syrah, Mourvèdre" },
-                    { grape: "Regions", description: "Southern Rhône Valley, France (garrigue regions)" }
-                ],
-                tip: "Lavender aromas are common in wines from the Southern Rhône, where the garrigue landscape imparts herbal and floral complexity to blends of Grenache, Syrah, and Mourvèdre."
-            },
-            {
-                name: "Lilac",
-                category: "From the Earth",
-                subcategory: "floral",
-                wines: [
-                    { grape: "Syrah", description: "Côte-Rôtie, Hermitage (Northern Rhône Valley, France)" },
-                    { grape: "Nebbiolo", description: "Barbaresco (Piedmont, Italy)" },
-                    { grape: "Pinot Noir", description: "Burgundy (France)" }
-                ],
-                tip: "Lilac aromas add a delicate floral complexity, often found in red wines from cooler climates or regions known for aromatic intensity."
-            },
-            // TROPICAL FRUIT
-            {
-                name: "Pineapple",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "New Zealand, e.g., Marlborough, Martinborough; also in delicate oaked versions worldwide" },
-                    { grape: "Verdejo", description: "Rueda (Spain)" },
-                    { grape: "Chardonnay", description: "Worldwide, often in simpler or oak chip versions" }
-                ],
-                tip: "Pineapple notes are common in tropical-style whites, particularly in warmer climates or lightly oaked expressions, adding a juicy, fruity character."
-            },
-            {
-                name: "Ripe Pineapple",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Sauvignon Blanc & Sémillon", description: "Bordeaux, France (Sauternes)" },
-                    { grape: "Chardonnay", description: "Sonoma (USA), Stellenbosch (South Africa), Margaret River (Australia)" },
-                    { grape: "Gewürztraminer", description: "Alsace, France" },
-                    { grape: "Chenin Blanc", description: "Quarts de Chaume, Coteaux du Layon (France)" },
-                    { grape: "Muscat", description: "Alsace, France" },
-                    { grape: "Furmint/Hárslevelű", description: "Tokaji Aszú, Hungary" }
-                ],
-                tip: "Ripe pineapple notes appear in rich, sweet wines or those from warmer climates, often with some oak influence or late harvest ripeness."
-            },
-            {
-                name: "Mango",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Gewürztraminer", description: "Alsace AOP, France (All levels from dry to sweet)" },
-                    { grape: "Chardonnay", description: "Ripe to overripe, common in more affordable or lower-quality expressions" }
-                ],
-                tip: "Mango aromas are prominent in lush, tropical wines, often found in ripe Gewürztraminer and Chardonnay from warmer regions or with extended ripeness."
-            },
-            {
-                name: "Banana",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Gamay", description: "Beaujolais Nouveau (France)" },
-                    { grape: "Chardonnay", description: "Especially in youthful, unoaked styles" },
-                    { grape: "Sauvignon Blanc", description: "Some New World styles, particularly in warmer climates" }
-                ],
-                tip: "Banana aromas are often associated with carbonic maceration, a winemaking technique used in Beaujolais Nouveau, and can appear in youthful wines with minimal aging."
-            },
-            {
-                name: "Lychee",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Gewürztraminer", description: "Alsace AOP, France (All levels, from dry to sweet)" },
-                    { grape: "Muscat", description: "Sweeter examples from Alsace (e.g., Vendange Tardive, Sélection de Grains Nobles)" }
-                ],
-                tip: "Lychee aromas are typical in aromatic, sweet, and off-dry wines. Gewürztraminer and Muscat from Alsace showcase these exotic, floral notes beautifully."
-            },
-            {
-                name: "Kiwi",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "New Zealand, including Marlborough, Martinborough, and Hawke's Bay" }
-                ],
-                tip: "Kiwi aromas are vibrant and zesty, a signature of New Zealand Sauvignon Blanc, especially from regions like Marlborough, where the cool climate enhances tropical fruit notes."
-            },
-            {
-                name: "Passion Fruit",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "New Zealand, including Marlborough, Martinborough, and Hawke's Bay" }
-                ],
-                tip: "Passion fruit aromas are a hallmark of New Zealand Sauvignon Blanc, particularly in Marlborough, where the cool climate and extended ripening period enhance these tropical, vibrant flavors."
-            },
-            {
-                name: "Gooseberry",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Worldwide, but especially prominent in New Zealand (e.g., Marlborough, Martinborough, Hawke's Bay)" }
-                ],
-                tip: "Gooseberry aromas are classic in New Zealand Sauvignon Blanc, delivering a sharp, green, and tangy character that highlights the wine's crisp acidity."
-            },
-            {
-                name: "Guava",
-                category: "Fruit",
-                subcategory: "tropical",
-                wines: [
-                    { grape: "Viognier", description: "Rhône Valley, e.g., Condrieu AOP (France)" },
-                    { grape: "Sauvignon Blanc & Sémillon Blends", description: "Sauternes from Bordeaux (France), especially matured examples over 7 years" },
-                    { grape: "Furmint/Hárslevelű", description: "Tokaji Aszú 5+ puttonyos (Hungary)" }
-                ],
-                tip: "Guava aromas add a lush, tropical fruit profile, often found in aged or richly textured wines like Condrieu Viognier, matured Sauternes, and sweet Hungarian Tokaji."
-            },
-            // CITRUS FRUIT
-            {
-                name: "Lemon (Fresh)",
-                category: "Fruit",
-                subcategory: "citrus",
-                wines: [
-                    { grape: "Chardonnay", description: "Chablis, Côte de Beaune (France)" },
-                    { grape: "Chenin Blanc", description: "Vouvray, Saumur Blanc (Loire Valley, France)" },
-                    { grape: "Grüner Veltliner", description: "Weinviertel DAC, Wachau (Austria)" },
-                    { grape: "Sauvignon Blanc", description: "Sancerre, Pouilly-Fumé (Loire Valley, France)" },
-                    { grape: "Melon de Bourgogne", description: "Muscadet (Loire Valley, France)" }
-                ],
-                tip: "Lemon aromas add zesty freshness, common in crisp, high-acid wines."
-            },
-            {
-                name: "Lemon (Ripe)",
-                category: "Fruit",
-                subcategory: "citrus",
-                wines: [
-                    { grape: "Chardonnay", description: "Chablis, Côte de Beaune (France); Margaret River (Australia); Sonoma Coast (USA)" },
-                    { grape: "Sauvignon Blanc", description: "Graves, Bordeaux Sec (France); Margaret River (Australia)" },
-                    { grape: "Sémillon", description: "Graves, Sauternes (France); Margaret River (Australia)" },
-                    { grape: "Torrontés", description: "Salta (Argentina)" }
-                ],
-                tip: "Ripe lemon adds a rich citrus note, common in wines from warmer climates or with some oak influence."
-            },
-            {
-                name: "Lime",
-                category: "Fruit",
-                subcategory: "citrus",
-                wines: [
-                    { grape: "Riesling", description: "Alsace (France), Eden & Clare Valley (Australia)" },
-                    { grape: "Sémillon", description: "Hunter Valley (Australia), Bordeaux Sec (France)" },
-                    { grape: "Sauvignon Blanc Blends", description: "Bordeaux, Graves, Margaret River" },
-                    { grape: "Albariño/Alvarinho", description: "Rías Baixas (Spain), Vinho Verde (Portugal)" },
-                    { grape: "Sauvignon Blanc", description: "Sancerre, Pouilly-Fumé (France)" },
-                    { grape: "Pinot Gris/Grigio", description: "Trentino, Alto Adige (Italy)" }
-                ],
-                tip: "Lime aromas add a crisp, zesty freshness to high-acid whites."
-            },
-            {
-                name: "Grapefruit",
-                category: "Fruit",
-                subcategory: "citrus",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Marlborough, Martinborough (New Zealand); Casablanca, Limari Valley (Chile)" },
-                    { grape: "Cortese", description: "Gavi di Gavi DOCG (Italy)" },
-                    { grape: "Torrontés", description: "Salta (Argentina)" }
-                ],
-                tip: "Grapefruit aromas are vibrant and zesty, common in crisp, aromatic whites from cooler regions."
-            },
-            {
-                name: "Mandarin, Kumquat, Tangerine",
-                category: "Fruit",
-                subcategory: "citrus",
-                wines: [
-                    { grape: "Viognier", description: "Condrieu (Northern Rhône, France)" },
-                    { grape: "Gewürztraminer/Pinot Gris", description: "Alsace (France)" },
-                    { grape: "Torrontés", description: "Salta (Argentina)" },
-                    { grape: "Muscat", description: "Alsace (France)" },
-                    { grape: "Sauvignon Blanc/Sémillon Blends", description: "Sauternes, Barsac (Bordeaux, France)" }
-                ],
-                tip: "These citrus notes bring brightness and are common in aromatic whites and sweet wines."
-            },
-            // TREE FRUIT
-            {
-                name: "White Peach",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Albariño/Alvarinho", description: "Rías Baixas (Spain), Vinho Verde (Portugal)" },
-                    { grape: "Riesling", description: "Germany (Kabinett from Mosel, Rheinhessen), Austria (Wachau, Kamptal, Kremstal)" },
-                    { grape: "Torrontés & Muscat", description: "Alsace (France), Salta (Argentina)" }
-                ],
-                tip: "White peach aromas add a juicy, fresh character, typical in vibrant, aromatic whites."
-            },
-            {
-                name: "Peach",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Riesling", description: "Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen)" },
-                    { grape: "Chardonnay", description: "Worldwide; riper peach notes often indicate warmer climates" },
-                    { grape: "Gewürztraminer", description: "Alsace (France), especially Vendange Tardive or Sélection de Grains Nobles" },
-                    { grape: "Viognier", description: "Northern Rhône Valley, Condrieu (France)" }
-                ],
-                tip: "Peach aromas suggest ripeness and are often found in fuller, aromatic whites from warmer regions or those with residual sugar."
-            },
-            {
-                name: "Nectarine",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Riesling", description: "Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen)" },
-                    { grape: "Chardonnay", description: "Worldwide; warmer climates or vintages" },
-                    { grape: "Gewürztraminer", description: "Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles" },
-                    { grape: "Viognier", description: "Northern Rhône, Condrieu (France)" }
-                ],
-                tip: "Nectarine notes suggest ripeness and warmth, typical in aromatic, rich white wines."
-            },
-            {
-                name: "Apricot",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Viognier", description: "Rhône Valley, e.g., Condrieu AOP (France)" },
-                    { grape: "Albariño/Alvarinho", description: "Rías Baixas (Spain), Vinho Verde (Portugal)" },
-                    { grape: "Riesling", description: "Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau)" },
-                    { grape: "Gewürztraminer", description: "Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles" }
-                ],
-                tip: "Apricot aromas are prominent in ripe, aromatic white wines, adding richness and a juicy, stone fruit character."
-            },
-            {
-                name: "Yellow Plum",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Riesling", description: "Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau)" },
-                    { grape: "Grüner Veltliner", description: "Riper expressions, Smaragd or Reserve (Austria)" },
-                    { grape: "Marsanne & Roussanne Blends", description: "Northern Rhône, e.g., Crozes-Hermitage, Hermitage, St. Joseph, Saint-Péray (France)" }
-                ],
-                tip: "Yellow plum aromas add a lush, ripe character, typical in full-bodied, rich white wines from warmer or sun-exposed regions."
-            },
-            {
-                name: "Green Apple",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Riesling", description: "Germany, e.g., Mosel (dry/off-dry), Rheinhessen, Nahe" },
-                    { grape: "Pinot Gris/Pinot Grigio", description: "Italy, e.g., Trentino DOC, Alto Adige (dry styles)" },
-                    { grape: "Melon de Bourgogne", description: "France, e.g., Muscadet AOP" },
-                    { grape: "Sauvignon Blanc", description: "France, e.g., Sancerre AOP (youthful, 1-2 years old)" }
-                ],
-                tip: "Green apple aromas add crisp, fresh acidity, commonly found in youthful, high-acid white wines."
-            },
-            {
-                name: "Yellow Apple",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Chenin Blanc", description: "Loire Valley, e.g., Vouvray (France)" },
-                    { grape: "Albariño/Alvarinho", description: "Rías Baixas (Spain), Vinho Verde (Portugal)" },
-                    { grape: "Chardonnay", description: "Chablis (France), Sonoma Coast (USA), Côte de Beaune (France), Margaret River (Australia)" },
-                    { grape: "Marsanne & Roussanne", description: "Northern Rhône, e.g., St. Joseph, Hermitage (France)" },
-                    { grape: "Grüner Veltliner", description: "Austria, Klassik & Reserve styles" },
-                    { grape: "Sweet Wines", description: "Tokaji Aszú (Hungary), Sauternes/Barsac (France)" }
-                ],
-                tip: "Yellow apple aromas add mellow, rounded fruitiness, found in wines from moderate to warm climates."
-            },
-            {
-                name: "Pear",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Pinot Grigio", description: "Trentino, Alto Adige (Italy)" },
-                    { grape: "Melon de Bourgogne", description: "Muscadet AOP (France)" },
-                    { grape: "Chardonnay (cool climate)", description: "Chablis AOP (France)" }
-                ],
-                tip: "Pear aromas bring a crisp, delicate fruitiness, common in cool-climate white wines and dry whites from Italy and France."
-            },
-            {
-                name: "Quince",
-                category: "Fruit",
-                subcategory: "tree",
-                wines: [
-                    { grape: "Viognier", description: "Northern Rhône Valley, e.g., Condrieu AOP (France)" },
-                    { grape: "Grüner Veltliner", description: "Riper expressions, Smaragd or Reserve (Austria)" },
-                    { grape: "Riesling", description: "Riper styles, e.g., Pfalz (Germany)" },
-                    { grape: "Chenin Blanc", description: "Vouvray 'Demi-Sec' or 'Moelleux' (France), or dry from warmer vintages" },
-                    { grape: "Pinot Gris/Pinot Grigio", description: "Slightly sweeter styles (Italy)" }
-                ],
-                tip: "Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines."
-            },
-            // HERBAL
-            {
-                name: "Asparagus (Green)",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Marlborough (New Zealand)" }
-                ],
-                tip: "Green asparagus notes are a hallmark of New Zealand Sauvignon Blanc, adding a fresh, vegetal character typical of cooler climate expressions."
-            },
-            {
-                name: "Asparagus (White)",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Grüner Veltliner", description: "Wachau, Kamptal, Kremstal (Austria)" }
-                ],
-                tip: "White asparagus notes add a subtle, earthy character to Grüner Veltliner, often found in wines from Austria's top regions."
-            },
-            {
-                name: "Radish",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Grüner Veltliner", description: "Wachau, Kamptal, Kremstal (Austria)" },
-                    { grape: "Sémillon", description: "Hunter Valley (Australia)" },
-                    { grape: "Riesling", description: "Eden Valley, Clare Valley (Australia)" }
-                ],
-                tip: "White radish aromas lend a crisp, slightly peppery edge to these wines, often highlighting their vibrant and fresh profile."
-            },
-            {
-                name: "Cucumber",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Marlborough (New Zealand)" },
-                    { grape: "Verdejo", description: "Rueda (Spain)" }
-                ],
-                tip: "Cucumber aromas add a cool, refreshing quality, common in crisp, high-acid white wines from these regions."
-            },
-            {
-                name: "Button Mushroom",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Chardonnay", description: "Aged or oak-aged, especially from Burgundy (France), developing subtle earthiness over time" }
-                ],
-                tip: "Button mushroom aromas contribute an earthy complexity, often found in oak-influenced whites, adding depth to the wine."
-            },
-            {
-                name: "Beetroot",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Pinot Noir", description: "Burgundy, e.g., Bourgogne Rouge AOP (France)" },
-                    { grape: "Gamay", description: "Beaujolais Cru (France)" }
-                ],
-                tip: "Beetroot aromas add an earthy, vegetal depth, often found in cool-climate reds like Pinot Noir and Gamay from Burgundy and Beaujolais."
-            },
-            {
-                name: "Tomato",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sangiovese", description: "Chianti Classico, Brunello di Montalcino (Italy)" }
-                ],
-                tip: "Tomato aromas bring a savory, herbal character, often found in Sangiovese-based wines, adding to their rustic and food-friendly profile."
-            },
-            {
-                name: "Black Olive",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Southern Rhône Blends (GSM)", description: "Châteauneuf-du-Pape, Gigondas (France)" },
-                    { grape: "Syrah/Shiraz", description: "Cote Rôtie, Cornas (Northern Rhône, France); Barossa Valley, Eden Valley (South Australia)" }
-                ],
-                tip: "Black olive aromas add a savory, briny depth, often found in Syrah and Rhône blends, contributing to the wine's complexity and richness."
-            },
-            {
-                name: "Green Bell Pepper",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Cabernet Sauvignon, Merlot, Malbec", description: "Especially common in wines from Chile and Argentina" },
-                    { grape: "Sauvignon Blanc", description: "Marlborough (New Zealand) and Sancerre (France)" }
-                ],
-                tip: "Green bell pepper aromas are linked to the compound pyrazine, adding a vegetal, herbaceous note, particularly in wines from cooler or coastal regions."
-            },
-            {
-                name: "Fennel",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Notably from Casablanca (Chile)" },
-                    { grape: "Verdejo", description: "Rueda DO (Spain)" }
-                ],
-                tip: "Fennel aromas add a fresh, herbal note to wines. Sauvignon Blanc from Casablanca often showcases this alongside citrus, while Verdejo from Rueda brings out fennel's crisp, green character."
-            },
-            {
-                name: "Ginger",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Gewürztraminer", description: "Alsace (France)" },
-                    { grape: "Pinot Gris", description: "Alsace (France)" },
-                    { grape: "Aged Sauternes", description: "Bordeaux (France)" },
-                    { grape: "Young Viognier", description: "Condrieu AOP (France)" }
-                ],
-                tip: "Ginger aromas add a warm, spicy character, often found in aromatic and rich white wines, enhancing their complexity and zest."
-            },
-            {
-                name: "Sage",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Mediterranean climates; herbal notes, including sage" },
-                    { grape: "Syrah/Shiraz", description: "Cooler climates; exhibits sage and herbal depth" },
-                    { grape: "Regions", description: "Southern Rhône Valley, Provence (France); red wines often show sage and thyme" }
-                ],
-                tip: "Sage aromas add herbal complexity to full-bodied red wines."
-            },
-            {
-                name: "Dill",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Chardonnay", description: "Often associated with American oak aging" },
-                    { grape: "Tempranillo", description: "Ribera del Duero & Rioja (Spain)" },
-                    { grape: "Malbec", description: "Argentina" },
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley (USA)" }
-                ],
-                tip: "Dill aromas are typically linked to American oak aging, adding a distinctive herbal character to the wine."
-            },
-            {
-                name: "Basil",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Riesling", description: "Germany" },
-                    { grape: "Muscat", description: "Alsace (France)" }
-                ],
-                tip: "Basil aromas can add a fresh, herbal quality to wines, often enhancing the aromatic complexity of Riesling and Muscat from cooler regions."
-            },
-            {
-                name: "Lemongrass",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "Various regions worldwide" },
-                    { grape: "Viognier", description: "Condrieu (France)" }
-                ],
-                tip: "Lemongrass aromas contribute a zesty, citrusy freshness, enhancing the aromatic profile of Sauvignon Blanc and Viognier, especially in cooler climates."
-            },
-            {
-                name: "Parsley",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Grüner Veltliner", description: "Cooler vintages or less ripe examples from Austria" }
-                ],
-                tip: "Parsley aromas add a fresh, green note to Grüner Veltliner, often found in wines from cooler climates or younger styles."
-            },
-            {
-                name: "Chive",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Cortese", description: "Gavi di Gavi (Italy)" },
-                    { grape: "Pinot Grigio", description: "Various regions worldwide" },
-                    { grape: "Garganega", description: "Soave (Italy)" },
-                    { grape: "Muscadet", description: "Muscadet 'sur lie' (France)" }
-                ],
-                tip: "Chive aromas contribute a fresh, herbal character, often enhancing the aromatic complexity of these white wines."
-            },
-            {
-                name: "Blackcurrant Leaf",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sauvignon Blanc", description: "New Zealand, Chile, South Africa" },
-                    { grape: "Verdejo", description: "Rueda (Spain)" }
-                ],
-                tip: "Blackcurrant leaf aromas impart a fresh, herbal character, often found in Sauvignon Blanc and Verdejo, enhancing the wine's complexity and aromatic profile."
-            },
-            {
-                name: "Mint & Eucalyptus",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Chile, Coonawarra (Australia)" },
-                    { grape: "Carménère", description: "Chile" },
-                    { grape: "Merlot", description: "Chile" },
-                    { grape: "Shiraz", description: "Barossa (Australia)" }
-                ],
-                tip: "Mint and eucalyptus aromas contribute a refreshing herbal quality, commonly found in Cabernet Sauvignon and Carménère from Chile, as well as Shiraz from warmer climates."
-            },
-            {
-                name: "Rosemary",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Grenache", description: "Southern Rhône Valley (France)" },
-                    { grape: "Syrah", description: "Southern Rhône Valley (France)" },
-                    { grape: "Mourvèdre", description: "Southern Rhône Valley (France)" },
-                    { grape: "Regions", description: "Garrigue regions of the Southern Rhône Valley, France" }
-                ],
-                tip: "Rosemary aromas add an herbal, aromatic complexity to wines, commonly found in blends from the Southern Rhône, enhancing their depth and character."
-            },
-            {
-                name: "Thyme",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Grenache", description: "Southern Rhône Valley (France)" },
-                    { grape: "Syrah", description: "Southern Rhône Valley (France)" },
-                    { grape: "Mourvèdre", description: "Southern Rhône Valley (France)" },
-                    { grape: "Regions", description: "Garrigue regions of the Southern Rhône Valley, France" }
-                ],
-                tip: "Thyme aromas add an earthy, herbal note to wines, commonly found in Southern Rhône blends, contributing to their complexity and rustic charm."
-            },
-            {
-                name: "Fir Leaf",
-                category: "From the Earth",
-                subcategory: "herbal",
-                wines: [
-                    { grape: "Sangiovese", description: "Brunello di Montalcino, Tuscany (Italy)" },
-                    { grape: "Tempranillo", description: "Ribera del Duero, Rioja (Spain)" }
-                ],
-                tip: "Fir leaf aromas add a fresh, resinous quality, enhancing the herbal complexity of Sangiovese and Tempranillo wines."
-            },
-            // EARTHY
-            {
-                name: "Mushroom",
-                category: "From the Earth",
-                subcategory: "earthy",
-                wines: [
-                    { grape: "Sangiovese", description: "Chianti, Brunello di Montalcino (Italy)" },
-                    { grape: "Matured Bordeaux", description: "General earthy regions (France)" },
-                    { grape: "Aged Syrah", description: "Regions known for earthy, matured expressions" },
-                    { grape: "Pinot Noir", description: "Burgundy (France)" },
-                    { grape: "Nebbiolo", description: "Barolo (Italy), with prominent mushroom and truffle aromas" }
-                ],
-                tip: "Mushroom and truffle aromas add a deep, earthy complexity, often developing in aged red wines from regions like Burgundy and Barolo."
-            },
-            {
-                name: "Dried Forest Floor",
-                category: "From the Earth",
-                subcategory: "earthy",
-                wines: [
-                    { grape: "Sangiovese", description: "Chianti Classico (5+ years)" },
-                    { grape: "Burgundy Pinot Noir", description: "(5+ years)" }
-                ],
-                tip: "Aromas of dry leaves, pine needles, and a forest in autumn; includes dried floor aromas."
-            },
-            {
-                name: "Compost",
-                category: "From the Earth",
-                subcategory: "earthy",
-                wines: [
-                    { grape: "GSM blends", description: "High percentage of Syrah or Mourvèdre" }
-                ],
-                tip: "Aromas of rich, decomposed organic matter, often earthy and complex."
-            },
-            {
-                name: "Leather",
-                category: "From the Earth",
-                subcategory: "earthy",
-                wines: [
-                    { grape: "Nebbiolo", description: "Barolo, Barbaresco (Italy)" },
-                    { grape: "Tempranillo", description: "Rioja (Spain)" },
-                    { grape: "Sangiovese", description: "Chianti Classico, Brunello di Montalcino (Italy)" },
-                    { grape: "Syrah", description: "Northern Rhône Valley (France)" }
-                ],
-                tip: "Leather aromas develop in aged red wines, often through extended bottle aging or oak influence, adding earthy, rustic notes that enhance complexity."
-            },
-            {
-                name: "Tobacco",
-                category: "From the Earth",
-                subcategory: "earthy",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Bordeaux (France), Napa Valley (USA)" },
-                    { grape: "Tempranillo", description: "Rioja (Spain)" },
-                    { grape: "Nebbiolo", description: "Barolo, Barbaresco (Italy)" },
-                    { grape: "Sangiovese", description: "Chianti Classico, Brunello di Montalcino (Italy)" }
-                ],
-                tip: "Tobacco aromas commonly develop in aged red wines, particularly from oak aging, lending a smoky, earthy complexity to full-bodied wines."
-            },
-            // MINERAL
-            {
-                name: "Slate",
-                category: "From the Earth",
-                subcategory: "mineral",
-                wines: [
-                    { grape: "Riesling", description: "Alsace (France), Germany (especially Mosel), Austria" }
-                ],
-                tip: "Smells like wet slate or rock after rain, with a crisp, clean mineral scent."
-            },
-            {
-                name: "Limestone / Chalk / Flint",
-                category: "From the Earth",
-                subcategory: "mineral",
-                wines: [
-                    { grape: "Chardonnay", description: "Burgundy and Jura (France), Sonoma, Santa Barbara, Oregon (USA)" }
-                ],
-                tip: "Characterized by a mineral quality reminiscent of limestone, chalk, or flint, contributing to the wine's structure and complexity."
-            },
-            {
-                name: "Löss / Sandstone / Silt / Mica",
-                category: "From the Earth",
-                subcategory: "mineral",
-                wines: [
-                    { grape: "Grüner Veltliner", description: "Austria" },
-                    { grape: "Viognier", description: "France" },
-                    { grape: "Marsanne & Roussanne", description: "France" }
-                ],
-                tip: "Earthy aromas of sandy and gritty elements, contributing to a complex mineral profile."
-            },
-            {
-                name: "Granite",
-                category: "From the Earth",
-                subcategory: "mineral",
-                wines: [
-                    { grape: "Gamay", description: "Beaujolais (France)" },
-                    { grape: "Syrah", description: "Rhône Valley (France)" }
-                ],
-                tip: "Aromas of crushed granite or gritty stone add robust, mineral-driven complexity to wines from granite-rich soils."
-            },
-            // SPICE & OAK
-            {
-                name: "Vanilla",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Sangiovese", description: "Chianti, Brunello di Montalcino (Italy)" },
-                    { grape: "Matured Bordeaux", description: "Regions known for oak aging (France)" },
-                    { grape: "Aged Syrah", description: "Earthy regions with oak influence" }
-                ],
-                tip: "Vanilla aromas are typically imparted by oak aging, adding a creamy, sweet spice note that enhances the wine's complexity and smoothness."
-            },
-            {
-                name: "Almond",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Marsanne", description: "Rhône Valley (France)" },
-                    { grape: "Chardonnay", description: "Burgundy (France)" },
-                    { grape: "Chenin Blanc", description: "Loire Valley (France)" }
-                ],
-                tip: "Almond aromas can originate from the grape variety, oak aging, or controlled oxidation, as seen in wines like Oloroso Sherry. These nutty notes enhance the wine's complexity."
-            },
-            {
-                name: "Hazelnut",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Burgundy (France), Champagne (France)" }
-                ],
-                tip: "Hazelnut aromas are part of the complexity found in mature white Burgundy and Champagne, often developed through aging on lees and oak contact, adding a nutty depth."
-            },
-            {
-                name: "Brioche",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Burgundy (France), California (USA), Margaret River (Australia)" },
-                    { grape: "Sparkling Wines", description: "Traditional method styles, such as Champagne (France), Cava (Spain), and quality sparkling wines from Tasmania (Australia) and Sussex (England)" }
-                ],
-                tip: "Brioche aromas result from lees aging (autolysis), adding rich, buttery, and yeasty notes that enhance the complexity and mouthfeel, especially in premium sparkling wines and Chardonnays."
-            },
-            {
-                name: "Burnt Match",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Burgundy (France)" }
-                ],
-                tip: "Burnt match aromas are typically caused by sulfur compounds from reductive winemaking or sulfur dioxide additions."
-            },
-            {
-                name: "Butter",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Napa Valley (USA), Burgundy (France), Margaret River (Australia)" }
-                ],
-                tip: "Butter aromas often come from malolactic fermentation, a winemaking process that converts malic acid to lactic acid, adding a creamy, buttery note to wines, especially in rich Chardonnays."
-            },
-            {
-                name: "Honey",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Riesling", description: "Mosel (Germany), Alsace (France)" },
-                    { grape: "Sémillon", description: "Sauternes (France)" },
-                    { grape: "Chardonnay", description: "Champagne (France)" }
-                ],
-                tip: "Honey aromas are a classic bottle-aged characteristic in mature white wines like Riesling, Sauternes, and Champagne. Younger wines may also show honeyed fruit notes."
-            },
-            {
-                name: "Caramel",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Napa Valley (USA), Burgundy (France)" },
-                    { grape: "Sémillon", description: "Sauternes (France), Hunter Valley (Australia)" },
-                    { grape: "Sherry Varieties", description: "Especially in Oloroso Sherry (Spain)" }
-                ],
-                tip: "Caramel aromas develop through oak aging or oxidation, adding a sweet, toasty complexity, especially in aged whites and fortified wines."
-            },
-            {
-                name: "Chocolate",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley (USA), Bordeaux (France)" },
-                    { grape: "Merlot", description: "Bordeaux (France), Washington State (USA)" },
-                    { grape: "Syrah/Shiraz", description: "Barossa Valley (Australia), Rhône Valley (France)" },
-                    { grape: "Malbec", description: "Mendoza (Argentina)" }
-                ],
-                tip: "Chocolate aromas are often derived from oak aging, which imparts warm, rich notes to fuller-bodied red wines, enhancing depth and complexity."
-            },
-            {
-                name: "Coffee",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley (USA), Bordeaux (France)" },
-                    { grape: "Merlot", description: "Bordeaux (France), Washington State (USA)" },
-                    { grape: "Syrah/Shiraz", description: "Barossa Valley (Australia), Rhône Valley (France)" },
-                    { grape: "Malbec", description: "Mendoza (Argentina)" }
-                ],
-                tip: "Coffee aromas often result from oak aging, especially in full-bodied reds, adding a roasted, toasty depth to the wine."
-            },
-            {
-                name: "Coconut",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Tempranillo", description: "Rioja (Spain), Ribera del Duero (Spain)" },
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley (USA)" },
-                    { grape: "Chardonnay", description: "California (USA)" }
-                ],
-                tip: "Coconut aromas typically come from American oak aging, which imparts a distinct, sweet, creamy character, especially in bold red wines and oaked Chardonnays."
-            },
-            {
-                name: "Nutmeg",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Pinot Noir", description: "Burgundy (France), cool climates; earthy, spicy notes" },
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley (California), Bordeaux (France); rich, oak-influenced" },
-                    { grape: "Merlot", description: "Napa Valley, Bordeaux; warm spice from oak" },
-                    { grape: "Carménère", description: "Chile; nutmeg-like spice from oak aging" }
-                ],
-                tip: "Nutmeg aromas come from oak aging, adding warm spice that enhances rich, structured red wines."
-            },
-            {
-                name: "Clove",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Pinot Noir", description: "Burgundy (France), cool climates; clove from oak aging" },
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley, Bordeaux; oak adds clove spice" },
-                    { grape: "Merlot", description: "Napa Valley, Bordeaux; clove notes from oak" },
-                    { grape: "Carménère", description: "Chile; clove-like spice with oak influence" }
-                ],
-                tip: "Clove aromas come from oak barrels, adding warm, spicy complexity to red wines."
-            },
-            {
-                name: "Cinnamon",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Pinot Noir", description: "Gains cinnamon notes with oak aging" },
-                    { grape: "Cabernet Sauvignon", description: "Napa Valley, Bordeaux; oak adds sweet spice" },
-                    { grape: "Merlot", description: "Common in Napa and Bordeaux; enhanced by oak" },
-                    { grape: "Carménère", description: "Chile; cinnamon-like spice from oak influence" }
-                ],
-                tip: "Cinnamon aromas come from oak aging, adding a sweet, warm spice that enhances red wine richness."
-            },
-            {
-                name: "Anise",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Syrah", description: "Northern Rhône (France); develops anise notes, adding a savory complexity" },
-                    { grape: "Barbera", description: "Italy; shows subtle anise character, enhancing its bold profile" }
-                ],
-                tip: "Anise aromas contribute a distinctive, savory spice often found in structured red wines, especially those from cooler climates or regions known for high acidity."
-            },
-            {
-                name: "Marzipan",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chenin Blanc", description: "Loire Valley (France)" },
-                    { grape: "Chardonnay", description: "Champagne (France)" }
-                ],
-                tip: "Marzipan aromas may appear in youthful Champagne and Chenin Blanc, adding a sweet, almond-like character that can also be present in other white wines."
-            },
-            {
-                name: "Black Pepper",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Syrah/Shiraz", description: "Barossa (Australia), Chile; pronounced black pepper" },
-                    { grape: "Cabernet Franc", description: "Peppery notes, especially in cooler climates" },
-                    { grape: "Cabernet Sauvignon", description: "Worldwide; subtle black pepper" },
-                    { grape: "Malbec", description: "Spicy, peppery character" },
-                    { grape: "Tempranillo", description: "Rioja (Spain); notable in Reserva and Gran Reserva" }
-                ],
-                tip: "Black pepper aromas add a bold spice, common in robust red wines."
-            },
-            {
-                name: "Walnut",
-                category: "Winemaking",
-                subcategory: "spice-oak",
-                wines: [
-                    { grape: "Chardonnay", description: "Meursault (Burgundy, France), Côte des Blancs (Champagne, France)" }
-                ],
-                tip: "Walnut aromas often develop in mature white wines, particularly in Meursault and Champagne, adding a rich, nutty complexity with age."
-            }
-        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            const aromaLibraryData = [
+                // Red Fruit
+                { aromaName: 'Strawberry', category: 'Red Fruit', wines: ['Pinot Noir: Subtle strawberry, elegant styles (France, New World).', 'Sangiovese: Youthful, expressive red fruit (Chianti, Italy).', 'Zinfandel: Bold, ripe strawberry notes (Lodi, USA).', 'Tempranillo: Balanced red fruit, lightly oaked (Rioja, Spain).', 'Grenache: Vibrant, juicy strawberry tones (Rhône, France).', 'Gamay: Fresh and bright red fruit (Beaujolais, France).'], tip: 'Strawberry aromas often resemble fresh berries or strawberry jam-think summer fruit bowls.' },
+                { aromaName: 'Raspberries', category: 'Red Fruit', wines: ['Zinfandel: Fresh, fruit-driven (Lodi, Central Coast, USA).', 'Shiraz: Ripe to overripe, spicy red fruit (Eden Valley, Australia).', 'Grenache: Juicy and ripe, found in Rhône (France) and Barossa (Australia).', 'Pinot Noir: Fresh and bright (Oregon, USA; Burgundy, France).'], tip: 'Raspberry aromas are easy to spot-think fresh, tangy, or slightly sweet raspberries, like a summer fruit tart.' },
+                { aromaName: 'Cherry', category: 'Red Fruit', wines: ['Ripe:', 'Pinot Noir: Rich styles (Worldwide).', 'Dolcetto: Fruit-forward (DOCG, Italy).', 'Pinotage: Bold and ripe (Stellenbosch, South Africa).', 'Zinfandel: Jammy and mature (USA).', 'Fresh & Tart:', 'Tempranillo: Light oak, vibrant (Rioja, Spain).', 'Gamay: Bright and youthful (Beaujolais Nouveau, France).', 'Chianti Classico: Lively and tart (Italy).'], tip: 'Cherry aromas range from bold in mature wines to tangy in youthful wines.' },
+                { aromaName: 'Red Currant & Cranberry', category: 'Red Fruit', wines: ['Sangiovese: Youthful red fruit (Chianti, Italy).', 'Pinot Noir: Tart and fresh (Burgundy, France).', 'Gamay: Bright, lively (Beaujolais Cru, France).', 'Nebbiolo: Found in young styles (Piemote, Italy).', 'Grenache Blends: Tart red fruit (Côtes du Rhône, France).'], tip: 'Red currant and cranberry aromas often indicate youthful, vibrant wines.' },
+                { aromaName: 'Pomegranate', category: 'Red Fruit', wines: ['Pinot Noir: Youthful, tangy (Marlborough, NZ; Mornington Peninsula, AU).', 'Sangiovese: Fresh, vibrant (Chianti, Italy).', 'Zinfandel: Juicy and lively (Central Valley, Lodi, USA).'], tip: 'Pomegranate aromas highlight freshness and tanginess in youthful red wines.' },
+                { aromaName: 'Red Plum (Fresh)', category: 'Red Fruit', wines: ['Merlot: Juicy and soft (Bordeaux Right Bank; Napa Valley, USA; Central Valley, Chile).', 'Malbec: Rich and ripe (Uco Valley, Argentina).', 'Grenache & Blends: Fruity and lush (Southern Rhône Valley, France).', 'Nebbiolo: Fresh and vibrant (Langhe DOC, Piedmont, Italy).'], tip: 'Red plum aromas are often present in approachable, fruit-forward red wines.' },
+                { aromaName: 'Red Plum (Ripe to Cooked)', category: 'Red Fruit', wines: ['Corvina Blends: Vibrant and ripe (Veneto, Italy).', 'Pinotage: Bold and earthy (Stellenbosch, South Africa).', 'Syrah/Shiraz: Ripe and spicy (Barossa Valley, Australia).', 'Merlot: Smooth and juicy (Central Valley, Chile).'], tip: 'Red plum aromas, from ripe to cooked, are often found in rich, bold wines.'},
+                
+                // Black Fruit
+                { aromaName: 'Black Currant (Cassis)', category: 'Black Fruit', wines: ['Cabernet Sauvignon: Primary aroma (Worldwide).', 'Cabernet Franc: Ripe and concentrated (France, USA).', 'Malbec: Rich and ripe (Argentina).', 'Regions: Bordeaux: Famous for cassis notes in its wines (France).'], tip: 'Black currant aromas (cassis) often signal wines with great aging potential.' },
+                { aromaName: 'Blackberries', category: 'Black Fruit', wines: ['Cabernet Sauvignon: Cooler vintages (Worldwide).', 'Cabernet Franc: Cooler climates (France, USA).', 'Carménère: Common in cooler regions (Chile).'], tip: 'Blackberry aromas are often linked to wines from cooler climates or vintages, giving them a fresh and vibrant character.'},
+                { aromaName: 'Black Cherry', category: 'Black Fruit', wines: ['Valpolicella Ripasso & Amarone: Rich and layered (Italy).', 'Merlot & Carménère: Deep and fruity (Chile).', 'Tempranillo: Prominent in Rioja Reservas (Spain).', 'Barbera: Tart and vibrant (Piedmont, Italy).', 'Southern Rhône Blends: Complex and structured (Châteauneuf-du-Pape, France).'], tip: 'Black cherry aromas often indicate wines with aging potential, developing richer and smoother with time.'},
+                { aromaName: 'Dark Plum', category: 'Black Fruit', wines: ['Merlot: Lush, dark plum flavors dominate (Napa Valley, USA).', 'Corvina Blends: Rich plum notes, especially in Amarone (Valpolicella, Italy).', 'Malbec: Ripe, concentrated dark plum character (Argentina).', 'Pinotage: Bold, smoky dark plum undertones (South Africa).'], tip: 'Dark plum aromas often signal a velvety, full-bodied wine-think smooth textures and bold flavors.'},
+                { aromaName: 'Black Elderberries', category: 'Black Fruit', wines: ['Malbec: Higher altitude (Argentina).', 'Shiraz: Barossa Valley (Australia).'], tip: 'Black elderberry aromas are often found in wines that range from medium to full-bodied, with higher altitude or warmer climate wines contributing to a more concentrated and complex flavor profile.'},
+                { aromaName: 'Black Raspberries', category: 'Black Fruit', wines: ['Shiraz: Intense black raspberry with a spicy edge (Barossa Valley, Australia).', 'Malbec: Juicy, ripe black raspberry in full-bodied styles (Mendoza, Argentina).'], tip: 'Black raspberry aromas often highlight ripe, bold fruit profiles, commonly found in wines from warm climates with concentrated flavors.'},
+                { aromaName: 'Blueberries', category: 'Black Fruit', wines: ['High-End Bordeaux Blends: Especially left bank (France).', 'Cabernet Sauvignon: Coonawarra (Australia).', 'Top Quality Malbec: High altitude expression (Argentina)', 'Cabernet Franc: Loire, e.g., Chinon, Saumur (France).'], tip: 'Blueberry aromas are often found in wines from cooler or higher altitude regions, adding a lush and refined fruit character.'},
 
-        // State management
-        let currentCategory = 'all';
-        let currentSubcategory = 'all';
-        let searchQuery = '';
-        let quizQuestions = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
+                // Citrus Fruit
+                { aromaName: 'Lemon', category: 'Citrus Fruit', wines: ['Fresh:', 'Chardonnay: Chablis, Côte de Beaune (France).', 'Chenin Blanc: Vouvray, Saumur Blanc (Loire Valley, France).', 'Ripe:', 'Sauvignon Blanc: Graves, Bordeaux Sec (France).', 'Torrontés: Salta (Argentina).'], tip: 'Lemon aromas add zesty freshness, common in crisp, high-acid wines.'},
+                { aromaName: 'Lime', category: 'Citrus Fruit', wines: ['Riesling: Alsace (France), Eden & Clare Valley (Australia).', 'Sémillon: Hunter Valley (Australia), Bordeaux Sec (France)', 'Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).'], tip: 'Lime aromas add a crisp, zesty freshness to high-acid whites.'},
+                { aromaName: 'Grapefruit', category: 'Citrus Fruit', wines: ['Sauvignon Blanc: Marlborough (New Zealand); Casablanca (Chile).', 'Cortese: Gavi di Gavi DOCG (Italy).', 'Torrontés: Salta (Argentina).'], tip: 'Grapefruit aromas are vibrant and zesty, common in crisp, aromatic whites from cooler regions.'},
+                { aromaName: 'Mandarin, Kumquat, Tangerine', category: 'Citrus Fruit', wines: ['Viognier: Condrieu (Northern Rhône, France).', 'Gewürztraminer/Pinot Gris: Alsace (France).', 'Torrontés: Salta (Argentina).', 'Muscat: Alsace (France).', 'Sauvignon Blanc/Sémillon Blends: Sauternes, Barsac (Bordeaux, France).'], tip: 'These citrus notes bring brightness and are common in aromatic whites and sweet wines.'},
 
-        // Initialize the app
-        function initializeApp() {
-            renderFlashcardGrid();
-        }
+                // Tree Fruit
+                { aromaName: 'Green Apple', category: 'Tree Fruit', wines: ['Riesling: Germany, e.g., Mosel (dry/off-dry).', 'Pinot Gris/Pinot Grigio: Italy (dry styles).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Sauvignon Blanc: Sancerre AOP (France).'], tip: 'Green apple aromas add crisp, fresh acidity, commonly found in youthful, high-acid white wines.'},
+                { aromaName: 'Yellow Apple', category: 'Tree Fruit', wines: ['Chenin Blanc: Loire Valley, e.g., Vouvray (France)', 'Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Chardonnay: Chablis (France), Sonoma Coast (USA), Côte de Beaune (France), Margaret River (Australia).', 'Marsanne & Roussanne: Northern Rhône, e.g., St. Joseph, Hermitage (France).', 'Grüner Veltliner: Austria, Klassik & Reserve styles', 'Sweet Wines: Tokaji Aszú (Hungary), Sauternes/Barsac (France).'], tip: 'Yellow apple aromas add mellow, rounded fruitiness, found in wines from moderate to warm climates.'},
+                { aromaName: 'Pear', category: 'Tree Fruit', wines: ['Pinot Grigio: Trentino, Alto Adige (Italy).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Chardonnay (cool climate): Chablis AOP (France).'], tip: 'Pear aromas bring a crisp, delicate fruitiness, common in cool-climate white wines and dry whites from Italy and France.'},
+                { aromaName: 'Quince', category: 'Tree Fruit', wines: ['Viognier: Northern Rhône Valley, e.g., Condrieu AOP (France).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Riesling: Riper styles, e.g., Pfalz (Germany).', 'Chenin Blanc: Vouvray “Demi-Sec” or “Moelleux” (France), or dry from warmer vintages.', 'Pinot Gris/Pinot Grigio: Slightly sweeter styles (Italy).'], tip: 'Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines.'},
+                { aromaName: 'White Peach', category: 'Tree Fruit', wines: ['Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Riesling: Germany (Kabinett from Mosel, Rheinhessen), Austria (Wachau, Kamptal, Kremstal).', 'Torrontés & Muscat: Alsace (France), Salta (Argentina).'], tip: 'White peach aromas add a juicy, fresh character, typical in vibrant, aromatic whites.'},
+                { aromaName: 'Peach', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; riper peach notes often indicate warmer climates.', 'Gewürztraminer: Alsace (France), especially Vendange Tardive or Sélection de Grains Nobles.', 'Viognier: Northern Rhône Valley, Condrieu (France).'], tip: 'Peach aromas suggest ripeness and are often found in fuller, aromatic whites from warmer regions or those with residual sugar.'},
+                { aromaName: 'Nectarine', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; warmer climates or vintages.', 'Gewürztraminer: Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles.', 'Viognier: Northern Rhône, Condrieu (France).'], tip: 'Nectarine notes suggest ripeness and warmth, typical in aromatic, rich white wines.'},
+                { aromaName: 'Apricot', category: 'Tree Fruit', wines: ['Viognier: Rhône Valley, e.g., Condrieu AOP (France).', 'Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Riesling: Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau).', 'Gewürztraminer: Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles.'], tip: 'Apricot aromas are prominent in ripe, aromatic white wines, adding richness and a juicy, stone fruit character.'},
+                { aromaName: 'Yellow Plum', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Marsanne & Roussanne Blends: Northern Rhône, e.g., Crozes-Hermitage, Hermitage, St. Joseph, Saint-Péray (France).'], tip: 'Yellow plum aromas add a lush, ripe character, typical in full-bodied, rich white wines from warmer or sun-exposed regions.'},
 
-        // Navigation functions
-        function showLanding() {
-            document.getElementById('landing').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
-        }
+                // Tropical Fruit
+                { aromaName: 'Pineapple', category: 'Tropical Fruit', wines: ['Sauvignon Blanc: New Zealand, e.g., Marlborough.', 'Verdejo: Rueda (Spain).', 'Chardonnay: Worldwide, often in simpler or oak chip versions.'], tip: 'Pineapple notes are common in tropical-style whites, particularly in warmer climates or lightly oaked expressions.'},
+                { aromaName: 'Ripe Pineapple', category: 'Tropical Fruit', wines: ['Sauvignon Blanc & Sémillon: Bordeaux, France (Sauternes)', 'Chardonnay: Sonoma (USA), Stellenbosch (South Africa), Margaret River (Australia).', 'Gewürztraminer: Alsace, France', 'Chenin Blanc: Quarts de Chaume, Coteaux du Layon (France).', 'Muscat: Alsace, France.', 'Furmint/Hárslevelű: Tokaji Aszú, Hungary.'], tip: 'Ripe pineapple notes appear in rich, sweet wines or those from warmer climates, often with some oak influence or late harvest ripeness.'},
+                { aromaName: 'Mango', category: 'Tropical Fruit', wines: ['Gewürztraminer: Alsace AOP, France (All levels from dry to sweet).', 'Chardonnay: Ripe to overripe, common in more affordable expressions.'], tip: 'Mango aromas are prominent in lush, tropical wines, often found in ripe Gewürztraminer.'},
+                { aromaName: 'Banana', category: 'Tropical Fruit', wines: ['Gamay: Beaujolais Nouveau (France)', 'Chardonnay: Especially in youthful, unoaked styles.', 'Sauvignon Blanc: Some New World styles, particularly in warmer climates.'], tip: 'Banana aromas are often associated with carbonic maceration, a winemaking technique used in Beaujolais Nouveau.'},
+                { aromaName: 'Lychee', category: 'Tropical Fruit', wines: ['Gewürztraminer: Alsace AOP, France (All levels, from dry to sweet).', 'Muscat: Sweeter examples from Alsace.'], tip: 'Lychee aromas are typical in aromatic, sweet, and off-dry wines.'},
+                { aromaName: 'Passion Fruit', category: 'Tropical Fruit', wines: ['Sauvignon Blanc: New Zealand, including Marlborough, Martinborough, and Hawke\'s Bay'], tip: 'Passion fruit aromas are a hallmark of New Zealand Sauvignon Blanc, particularly in Marlborough.'},
+                { aromaName: 'Kiwi', category: 'Tropical Fruit', wines: ['Sauvignon Blanc: New Zealand, including Marlborough, Martinborough, and Hawke\'s Bay'], tip: 'Kiwi aromas are vibrant and zesty, a signature of New Zealand Sauvignon Blanc, especially from regions like Marlborough.'},
+                { aromaName: 'Guava', category: 'Tropical Fruit', wines: ['Viognier: Rhône Valley, e.g., Condrieu AOP (France)', 'Sauvignon Blanc & Sémillon Blends: Sauternes from Bordeaux (France), especially matured examples over 7 years', 'Furmint/Hárslevelű: Tokaji Aszú 5+ puttonyos (Hungary)'], tip: 'Guava aromas add a lush, tropical fruit profile, often found in aged or richly textured wines.'},
+                
+                // Floral
+                { aromaName: 'Rose', category: 'Floral', wines: ['Grenache: Southern Rhône (France).', 'Pinot Noir: Burgundy (France) and cooler regions (Worldwide)', 'Nebbiolo: Barolo & Barbaresco (Italy).', 'Gewürztraminer: Alsace (France).', 'Pinot Gris: Alsace (France).'], tip: 'Rose aromas are found in both red and aromatic white wines.'},
+                { aromaName: 'Violets', category: 'Floral', wines: ['Cabernet Family: Includes Cabernet Sauvignon and Cabernet Franc (Worldwide).', 'Malbec: Riper expressions (Argentina).', 'Nebbiolo: Riper styles, especially from Barolo and Barbaresco (Italy).'], tip: 'Violets add floral elegance to structured reds, especially in balanced or cooler vintages.'},
+                { aromaName: 'Jasmine', category: 'Floral', wines: ['Torrontés: Salta (Argentina).', 'Muscat: Alsace (France).'], tip: 'Jasmine aromas are prominent in aromatic white wines. In Salta, high altitude enhances floral intensity.' },
+                { aromaName: 'Honeysuckle', category: 'Floral', wines: ['Bordeaux Blends: Sauternes AOP, Sauvignon Blanc & Sémillon (France).', 'Viognier: Condrieu (France).'], tip: 'Honeysuckle aromas are prominent in sweet Bordeaux wines like Sauternes and in Viognier from Condrieu.' },
+                { aromaName: 'Elderflower', category: 'Floral', wines: ['Sauvignon Blanc: Found in both Old World (e.g., Loire Valley, France) and New World regions (e.g., Marlborough, New Zealand).'], tip: 'Elderflower aromas are a signature of Sauvignon Blanc, with Old World expressions showing more subtle notes.' },
+                { aromaName: 'Lily', category: 'Floral', wines: ['Pinot Grigio: Trentino DOC (Italy)', 'Viognier: Condrieu (France).', 'Chenin Blanc: Vouvray (Loire Valley, France).'], tip: 'Lily aromas are delicate and often found in aromatic white wines, adding elegance to the wine\'s profile.' },
+                { aromaName: 'Linden', category: 'Floral', wines: ['Riesling: Riper styles from Pfalz (Germany), Alsace (France), and Wachau (Austria).', 'Chardonnay: Burgundy (France).', 'Petit Manseng: Jurançon (France).'], tip: 'Linden aromas are common in riper white wines, offering a subtle floral complexity.' },
+                { aromaName: 'Acacia', category: 'Floral', wines: ['Vermentino: Corsica (France).', 'Malvasia Istriana: Croatia.', 'Chenin Blanc: Loire Valley (France).', 'Chardonnay: Burgundy (France), Sonoma Coast (USA).'], tip: 'Acacia aromas can be enhanced by using acacia wood barrels, which add subtle floral notes.' },
+                { aromaName: 'Lemon Blossom', category: 'Floral', wines: ['Viognier: Known for its aromatic and floral profile.', 'Aromatic Chardonnay: Especially with little to no oak influence (Worldwide).'], tip: 'Lemon blossom aromas add a delicate, citrusy floral note to wines.' },
+                { aromaName: 'Lime Blossom', category: 'Floral', wines: ['Riesling: Particularly from Eden Valley and Clare Valley (Australia).'], tip: 'Lime blossom aromas are a hallmark of Australian Rieslings, often featuring bright acidity.' },
+                { aromaName: 'Orange Blossom', category: 'Floral', wines: ['Muscat: Intense orange blossom with citrus highlights (global styles).', 'Viognier: Offers a lush, floral profile.', 'Aromatic Chardonnay: Especially in unoaked or lightly oaked styles.'], tip: 'Orange blossom aromas add a fragrant, citrusy elegance to wines.' },
+                { aromaName: 'Iris', category: 'Floral', wines: ['Sangiovese: From Tuscany, e.g., Chianti (Italy).', 'Syrah: From Crozes-Hermitage (France).'], tip: 'Iris aromas add a subtle, elegant floral touch, often found in structured wines.' },
+                { aromaName: 'Geranium', category: 'Floral', wines: ['Malbec: Mendoza (Argentina).'], tip: 'Geranium aromas in Malbec can add a distinctive herbal-floral note, often found in youthful or unoaked expressions.' },
+                { aromaName: 'Lilac', category: 'Floral', wines: ['Syrah: Côte-Rôtie, Hermitage (Northern Rhône Valley, France).', 'Nebbiolo: Barbaresco (Piedmont, Italy).', 'Pinot Noir: Burgundy (France).'], tip: 'Lilac aromas add a delicate floral complexity, often found in red wines from cooler climates.' },
 
-        function showDashboard() {
-            document.getElementById('landing').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            renderFlashcardGrid();
-        }
+                // Herbal
+                { aromaName: 'Green Bell Pepper', category: 'Herbal', wines: ['Cabernet Sauvignon, Merlot, Malbec: Especially common in wines from Chile and Argentina.', 'Sauvignon Blanc: Marlborough (New Zealand) and Sancerre (France).'], tip: 'Green bell pepper aromas are linked to the compound pyrazine, adding a vegetal, herbaceous note.'},
+                { aromaName: 'Mint & Eucalyptus', category: 'Herbal', wines: ['Cabernet Sauvignon: Chile, Coonawarra (Australia).', 'Carménère: Chile.', 'Merlot: Chile.', 'Shiraz: Barossa (Australia).'], tip: 'Mint and eucalyptus aromas contribute a refreshing herbal quality, common in wines from cooler climates.'},
+                { aromaName: 'Fennel', category: 'Herbal', wines: ['Sauvignon Blanc: Notably from Casablanca (Chile).', 'Verdejo: Rueda DO (Spain).'], tip: 'Fennel aromas add a fresh, herbal note to wines, often showcasing a crisp, green character.' },
+                { aromaName: 'Chamomile', category: 'Herbal', wines: ['Chenin Blanc: Stellenbosch, Swartland, Paarl (South Africa).', 'Viognier: Condrieu (France).', 'Chasselas: Predominantly from Switzerland.', 'Grechetto: Italy', 'Arneis: Piedmont (Italy).'], tip: 'Chamomile aromas add a soft, herbal complexity to these wines.' },
+                { aromaName: 'Lavender', category: 'Herbal', wines: ['Grape Varieties: Grenache, Syrah, Mourvèdre.', 'Regions: Southern Rhône Valley, France (garrigue regions).'], tip: 'Lavender aromas are common in wines from the Southern Rhône, where the garrigue landscape imparts herbal and floral complexity.' },
+                { aromaName: 'Asparagus (Green)', category: 'Herbal', wines: ['Sauvignon Blanc: Marlborough (New Zealand).'], tip: 'Green asparagus notes are a hallmark of New Zealand Sauvignon Blanc, adding a fresh, vegetal character.' },
+                { aromaName: 'Asparagus (White)', category: 'Herbal', wines: ['Grüner Veltliner: Wachau, Kamptal, Kremstal (Austria).'], tip: 'White asparagus notes add a subtle, earthy character to Grüner Veltliner.' },
+                { aromaName: 'Cucumber', category: 'Herbal', wines: ['Sauvignon Blanc: Marlborough (New Zealand).', 'Verdejo: Rueda (Spain).'], tip: 'Cucumber aromas add a cool, refreshing quality, common in crisp, high-acid white wines.' },
+                { aromaName: 'Sage', category: 'Herbal', wines: ['Cabernet Sauvignon: Mediterranean climates; herbal notes, including sage.', 'Syrah/Shiraz: Cooler climates; exhibits sage and herbal depth.', 'Regions: Southern Rhône Valley, Provence (France).'], tip: 'Sage aromas add herbal complexity to full-bodied red wines.' },
+                { aromaName: 'Dill', category: 'Herbal', wines: ['Chardonnay: Often associated with American oak aging.', 'Tempranillo: Ribera del Duero & Rioja (Spain).', 'Malbec: Argentina', 'Cabernet Sauvignon: Napa Valley (USA).'], tip: 'Dill aromas are typically linked to American oak aging.' },
+                { aromaName: 'Basil', category: 'Herbal', wines: ['Riesling: Germany.', 'Muscat: Alsace (France).'], tip: 'Basil aromas can add a fresh, herbal quality to wines from cooler regions.' },
+                { aromaName: 'Lemongrass', category: 'Herbal', wines: ['Sauvignon Blanc: Various regions worldwide.', 'Viognier: Condrieu (France).'], tip: 'Lemongrass aromas contribute a zesty, citrusy freshness.' },
+                { aromaName: 'Parsley', category: 'Herbal', wines: ['Grüner Veltliner: Cooler vintages or less ripe examples from Austria.'], tip: 'Parsley aromas add a fresh, green note to Grüner Veltliner, often found in younger styles.' },
+                { aromaName: 'Chive', category: 'Herbal', wines: ['Cortese: Gavi di Gavi (Italy).', 'Pinot Grigio: Various regions worldwide.', 'Garganega: Soave (Italy)', 'Muscadet: Muscadet “sur lie” (France).'], tip: 'Chive aromas contribute a fresh, herbal character to white wines.' },
+                { aromaName: 'Blackcurrant Leaf', category: 'Herbal', wines: ['Sauvignon Blanc: New Zealand, Chile, South Africa', 'Verdejo: Rueda (Spain)'], tip: 'Blackcurrant leaf aromas impart a fresh, herbal character.' },
+                { aromaName: 'Rosemary', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Rosemary aromas add an herbal, aromatic complexity to wines from the Southern Rhône.' },
+                { aromaName: 'Thyme', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Thyme aromas add an earthy, herbal note to Southern Rhône blends.' },
+                { aromaName: 'Fir Leaf', category: 'Herbal', wines: ['Sangiovese: Brunello di Montalcino, Tuscany (Italy).', 'Tempranillo: Ribera del Duero, Rioja (Spain).'], tip: 'Fir leaf aromas add a fresh, resinous quality to Sangiovese and Tempranillo wines.' },
 
-        function toggleMobileMenu() {
-            document.getElementById('sidebar').classList.toggle('mobile-open');
-        }
+                // Spice & Oak
+                { aromaName: 'Vanilla', category: 'Spice & Oak', wines: ['Sangiovese: Chianti, Brunello di Montalcino (Italy).', 'Matured Bordeaux: Regions known for oak aging (France).', 'Aged Syrah: Earthy regions with oak influence.'], tip: 'Vanilla aromas are typically imparted by oak aging, adding a creamy, sweet spice note.'},
+                { aromaName: 'Clove', category: 'Spice & Oak', wines: ['Pinot Noir: Burgundy (France), cool climates; clove from oak aging.', 'Cabernet Sauvignon: Napa Valley, Bordeaux; oak adds clove spice', 'Merlot: Napa Valley, Bordeaux; clove notes from oak.'], tip: 'Clove aromas come from oak barrels, adding warm, spicy complexity to red wines.'},
+                { aromaName: 'Black Pepper', category: 'Spice & Oak', wines: ['Syrah/Shiraz: Barossa (Australia), Chile; pronounced black pepper.', 'Cabernet Franc: Peppery notes, especially in cooler climates', 'Cabernet Sauvignon: Worldwide; subtle black pepper.'], tip: 'Black pepper aromas add a bold spice, common in robust red wines.'},
+                { aromaName: 'Nutmeg', category: 'Spice & Oak', wines: ['Pinot Noir: Burgundy (France), cool climates; earthy, spicy notes.', 'Cabernet Sauvignon: Napa Valley (California), Bordeaux (France); rich, oak-influenced.', 'Merlot: Napa Valley, Bordeaux; warm spice from oak.', 'Carménère: Chile; nutmeg-like spice from oak aging.'], tip: 'Nutmeg aromas come from oak aging, adding warm spice that enhances rich, structured red wines.'},
+                { aromaName: 'Cinnamon', category: 'Spice & Oak', wines: ['Pinot Noir: Gains cinnamon notes with oak aging.', 'Cabernet Sauvignon: Napa Valley, Bordeaux; oak adds sweet spice.', 'Merlot: Common in Napa and Bordeaux; enhanced by oak.', 'Carménère: Chile; cinnamon-like spice from oak influence.'], tip: 'Cinnamon aromas come from oak aging, adding a sweet, warm spice that enhances red wine richness.'},
+                { aromaName: 'Anise', category: 'Spice & Oak', wines: ['Syrah: Northern Rhône (France); develops anise notes, adding a savory complexity.', 'Barbera: Italy; shows subtle anise character, enhancing its bold profile.'], tip: 'Anise aromas contribute a distinctive, savory spice often found in structured red wines.'},
+                { aromaName: 'Ginger', category: 'Spice & Oak', wines: ['Gewürztraminer: Alsace (France)', 'Pinot Gris: Alsace (France).', 'Aged Sauternes: Bordeaux (France).', 'Young Viognier: Condrieu AOP (France).'], tip: 'Ginger aromas add a warm, spicy character, often found in aromatic and rich white wines.'},
+                { aromaName: 'Honey', category: 'Spice & Oak', wines: ['Riesling: Mosel (Germany), Alsace (France)', 'Sémillon: Sauternes (France)', 'Chardonnay: Champagne (France)'], tip: 'Honey aromas are a classic bottle-aged characteristic in mature white wines.'},
+                { aromaName: 'Caramel', category: 'Spice & Oak', wines: ['Chardonnay: Napa Valley (USA), Burgundy (France).', 'Sémillon: Sauternes (France), Hunter Valley (Australia).', 'Sherry Varieties: Especially in Oloroso Sherry (Spain).'], tip: 'Caramel aromas develop through oak aging or oxidation, adding a sweet, toasty complexity.'},
+                { aromaName: 'Chocolate', category: 'Spice & Oak', wines: ['Cabernet Sauvignon: Napa Valley (USA), Bordeaux (France).', 'Merlot: Bordeaux (France), Washington State (USA).', 'Syrah/Shiraz: Barossa Valley (Australia), Rhône Valley (France)', 'Malbec: Mendoza (Argentina).'], tip: 'Chocolate aromas are often derived from oak aging, which imparts warm, rich notes to fuller-bodied red wines.'},
+                { aromaName: 'Coffee', category: 'Spice & Oak', wines: ['Cabernet Sauvignon: Napa Valley (USA), Bordeaux (France).', 'Merlot: Bordeaux (France), Washington State (USA).', 'Syrah/Shiraz: Barossa Valley (Australia), Rhône Valley (France).', 'Malbec: Mendoza (Argentina).'], tip: 'Coffee aromas often result from oak aging, especially in full-bodied reds, adding a roasted, toasty depth.'},
+                { aromaName: 'Coconut', category: 'Spice & Oak', wines: ['Tempranillo: Rioja (Spain), Ribera del Duero (Spain).', 'Cabernet Sauvignon: Napa Valley (USA).', 'Chardonnay: California (USA).'], tip: 'Coconut aromas typically come from American oak aging, which imparts a distinct, sweet, creamy character.'},
+                { aromaName: 'Marzipan', category: 'Spice & Oak', wines: ['Chenin Blanc: Loire Valley (France).', 'Chardonnay: Champagne (France).'], tip: 'Marzipan aromas may appear in youthful Champagne and Chenin Blanc, adding a sweet, almond-like character.'},
+                { aromaName: 'Almond', category: 'Spice & Oak', wines: ['Marsanne: Rhône Valley (France).', 'Chardonnay: Burgundy (France).', 'Chenin Blanc: Loire Valley (France).'], tip: 'Almond aromas can originate from the grape variety, oak aging, or controlled oxidation, as seen in wines like Oloroso Sherry.'},
+                { aromaName: 'Hazelnut', category: 'Spice & Oak', wines: ['Chardonnay: Burgundy (France), Champagne (France).'], tip: 'Hazelnut aromas are part of the complexity found in mature white Burgundy and Champagne, often developed through aging on lees and oak contact.'},
+                { aromaName: 'Walnut', category: 'Spice & Oak', wines: ['Chardonnay: Meursault (Burgundy, France), Côte des Blancs (Champagne, France).'], tip: 'Walnut aromas often develop in mature white wines, particularly in Meursault and Champagne.'},
+                { aromaName: 'Brioche', category: 'Spice & Oak', wines: ['Chardonnay: Burgundy (France), California (USA), Margaret River (Australia).', 'Sparkling Wines: Traditional method styles, such as Champagne (France), Cava (Spain), and quality sparkling wines from Tasmania (Australia) and Sussex (England).'], tip: 'Brioche aromas result from lees aging (autolysis), adding rich, buttery, and yeasty notes.'},
+                { aromaName: 'Butter', category: 'Spice & Oak', wines: ['Chardonnay: Napa Valley (USA), Burgundy (France), Margaret River (Australia).'], tip: 'Butter aromas often come from malolactic fermentation, a winemaking process that converts malic acid to lactic acid.'},
 
-        function toggleSubcategories(category) {
-            const subList = document.getElementById(category + '-sub');
-            subList.classList.toggle('open');
-        }
-
-        // Filter functions
-        function filterCategory(category) {
-            currentCategory = category;
-            currentSubcategory = 'all';
-            updateActiveCategory(category);
-            renderFlashcardGrid();
-        }
-
-        function filterSubcategory(subcategory) {
-            currentSubcategory = subcategory;
-            renderFlashcardGrid();
-            event.stopPropagation();
-        }
-
-        function updateActiveCategory(category) {
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            if (event && event.target) {
-                event.target.closest('.category-item').classList.add('active');
-            }
-        }
-
-        function searchAromas(query) {
-            searchQuery = query.toLowerCase();
-            renderFlashcardGrid();
-        }
-
-        // Render flashcard grid
-        function renderFlashcardGrid() {
-            const grid = document.getElementById('flashcardGrid');
-            grid.innerHTML = '';
-
-            let filteredAromas = aromaData;
-
-            // Apply category filter
-            if (currentCategory !== 'all') {
-                filteredAromas = filteredAromas.filter(aroma => 
-                    aroma.category.toLowerCase().includes(currentCategory.toLowerCase())
-                );
-            }
-
-            // Apply subcategory filter
-            if (currentSubcategory !== 'all') {
-                filteredAromas = filteredAromas.filter(aroma => 
-                    aroma.subcategory === currentSubcategory
-                );
-            }
-
-            // Apply search filter
-            if (searchQuery) {
-                filteredAromas = filteredAromas.filter(aroma =>
-                    aroma.name.toLowerCase().includes(searchQuery) ||
-                    aroma.wines.some(wine => 
-                        wine.grape.toLowerCase().includes(searchQuery) ||
-                        wine.description.toLowerCase().includes(searchQuery)
-                    )
-                );
-            }
-
-            // Render flashcards
-            filteredAromas.forEach(aroma => {
-                const card = createFlashcard(aroma);
-                grid.appendChild(card);
-            });
-        }
-
-        function createFlashcard(aroma) {
-            const card = document.createElement('div');
-            card.className = 'flashcard';
-            card.onclick = () => showAromaDetails(aroma);
-
-            card.innerHTML = `
-                <div class="flashcard-category">${formatSubcategory(aroma.subcategory)}</div>
-                <div class="flashcard-content">
-                    <h3 class="flashcard-name">${aroma.name}</h3>
-                    <div class="flashcard-wines">
-                        ${aroma.wines.slice(0, 3).map(wine => 
-                            `<div class="wine-item"><span class="wine-grape">${wine.grape}</span></div>`
-                        ).join('')}
-                        ${aroma.wines.length > 3 ? '<div class="wine-item">...</div>' : ''}
-                    </div>
-                </div>
-            `;
-
-            return card;
-        }
-
-        function formatSubcategory(sub) {
-            const mapping = {
-                'red': 'Red Fruit',
-                'black': 'Black Fruit',
-                'citrus': 'Citrus',
-                'tree': 'Tree Fruit',
-                'tropical': 'Tropical',
-                'floral': 'Floral',
-                'herbal': 'Herbal',
-                'earthy': 'Earthy',
-                'mineral': 'Mineral',
-                'spice-oak': 'Spice & Oak'
-            };
-            return mapping[sub] || sub;
-        }
-
-        // Modal functions
-        function showAromaDetails(aroma) {
-            document.getElementById('modalAromaName').textContent = aroma.name;
-            document.getElementById('modalAromaCategory').textContent = 
-                `${aroma.category} • ${formatSubcategory(aroma.subcategory)}`;
-            
-            const wineList = document.getElementById('modalWineList');
-            wineList.innerHTML = aroma.wines.map(wine => 
-                `<li><strong>${wine.grape}:</strong> ${wine.description}</li>`
-            ).join('');
-
-            document.getElementById('modalExpertTip').textContent = aroma.tip;
-            
-            document.getElementById('aromaModal').style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Quiz functions
-        function startQuiz() {
-            // Prepare 10 random questions with matching style
-            quizQuestions = [];
-            const usedQuestionTypes = [];
-            
-            // Question types for variety
-            const questionTypes = [
-                'grape-to-aroma',
-                'aroma-to-grape',
-                'region-to-aroma',
-                'category-match',
-                'tip-match'
+                // Earthy
+                { aromaName: 'Mushroom', category: 'Earthy', wines: ['Sangiovese: Chianti, Brunello di Montalcino (Italy).', 'Matured Bordeaux: General earthy regions (France).', 'Aged Syrah: Regions known for earthy, matured expressions.', 'Pinot Noir: Burgundy (France).', 'Nebbiolo: Barolo (Italy).'], tip: 'Mushroom and truffle aromas add a deep, earthy complexity, often developing in aged red wines.'},
+                { aromaName: 'Leather', category: 'Earthy', wines: ['Nebbiolo: Barolo, Barbaresco (Italy)', 'Tempranillo: Rioja (Spain).', 'Sangiovese: Chianti Classico, Brunello di Montalcino (Italy).', 'Syrah: Northern Rhône Valley (France).'], tip: 'Leather aromas develop in aged red wines, often through extended bottle aging or oak influence.'},
+                { aromaName: 'Dried Forest Floor', category: 'Earthy', wines: ['Sangiovese: Chianti Classico (5+ years).', 'Burgundy Pinot Noir: (5+ years).'], tip: 'Aromas of dry leaves, pine needles, and a forest in autumn; includes dried floor aromas.'},
+                { aromaName: 'Compost', category: 'Earthy', wines: ['Grenache, Syrah, Mourvèdre (GSM) blends: High percentage of Syrah or Mourvèdre.'], tip: 'Aromas of rich, decomposed organic matter, often earthy and complex.'},
+                { aromaName: 'Button Mushroom', category: 'Earthy', wines: ['Chardonnay: Aged or oak-aged, especially from Burgundy (France), developing subtle earthiness over time.'], tip: 'Button mushroom aromas contribute an earthy complexity, often found in oak-influenced whites, adding depth to the wine.'},
+                { aromaName: 'Beetroot', category: 'Earthy', wines: ['Pinot Noir: Burgundy, e.g., Bourgogne Rouge AOP (France).', 'Gamay: Beaujolais Cru (France).'], tip: 'Beetroot aromas add an earthy, vegetal depth, often found in cool-climate reds.'},
+                { aromaName: 'Tomato', category: 'Earthy', wines: ['Sangiovese: Chianti Classico, Brunello di Montalcino (Italy).'], tip: 'Tomato aromas bring a savory, herbal character, often found in Sangiovese-based wines.'},
+                { aromaName: 'Black Olive', category: 'Earthy', wines: ['Southern Rhône Blends (Grenache, Syrah, Mourvèdre): Châteauneuf-du-Pape, Gigondas (France).', 'Syrah/Shiraz: Cote Rôtie, Cornas (Northern Rhône, France); Barossa Valley, Eden Valley (South Australia).'], tip: 'Black olive aromas add a savory, briny depth, often found in Syrah and Rhône blends.'},
+                { aromaName: 'Tobacco', category: 'Earthy', wines: ['Cabernet Sauvignon: Bordeaux (France), Napa Valley (USA).', 'Tempranillo: Rioja (Spain).', 'Nebbiolo: Barolo, Barbaresco (Italy).', 'Sangiovese: Chianti Classico, Brunello di Montalcino (Italy).'], tip: 'Tobacco aromas commonly develop in aged red wines, particularly from oak aging.'},
+                
+                // Mineral
+                { aromaName: 'Slate', category: 'Mineral', wines: ['Riesling: Alsace (France), Germany (especially Mosel), Austria.'], tip: 'Smells like wet slate or rock after rain, with a crisp, clean mineral scent.'},
+                { aromaName: 'Limestone / Chalk / Flint', category: 'Mineral', wines: ['Chardonnay: Burgundy and Jura (France), Sonoma, Santa Barbara, Oregon (USA).'], tip: 'Characterized by a mineral quality reminiscent of limestone, chalk, or flint, contributing to the wine\'s structure and complexity.'},
+                { aromaName: 'Löss / Sandstone / Silt / Mica', category: 'Mineral', wines: ['Grüner Veltliner: Austria.', 'Viognier: France.', 'Marsanne & Roussanne: France.'], tip: 'Earthy aromas of sandy and gritty elements, contributing to a complex mineral profile.'},
+                { aromaName: 'Granite', category: 'Mineral', wines: ['Gamay: Beaujolais (France).', 'Syrah: Rhône Valley (France).'], tip: 'Aromas of crushed granite or gritty stone add robust, mineral-driven complexity to wines from granite-rich soils.'},
+                { aromaName: 'Burnt Match', category: 'Mineral', wines: ['Chardonnay: Burgundy (France).'], tip: 'Burnt match aromas are typically caused by sulfur compounds from reductive winemaking or sulfur dioxide additions.'}
             ];
+
+            // DOM Elements
+            const landingContainer = document.getElementById('landing-container');
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const resultContainer = document.getElementById('result-container');
+            const aromaGrid = document.getElementById('aroma-grid');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const searchBar = document.getElementById('search-bar');
+            const cardDetailContainer = document.getElementById('library-card-detail-container');
+            const playGameBtn = document.getElementById('play-game-btn');
+            const playGameBtnLanding = document.getElementById('play-game-btn-landing');
+            const logo = document.querySelector('.sidebar-logo');
+            const exploreLibraryBtn = document.getElementById('go-to-dashboard-btn');
+            const closeLibraryBtn = document.querySelector('#library-container .modal-close-btn');
+
+            // Game State
+            let currentQuestions = [];
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function showScreen(screen) {
+                landingContainer.classList.remove('is-visible');
+                dashboardContainer.classList.remove('is-visible');
+                quizContainer.classList.remove('is-visible');
+                resultContainer.classList.remove('is-visible');
+                cardDetailContainer.classList.remove('is-visible');
+                screen.classList.add('is-visible');
+            };
+
+            function renderAromaGrid(data) {
+                aromaGrid.innerHTML = '';
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.classList.add('aroma-card');
+                    card.innerHTML = `<div class="aroma-card-name">${item.aromaName}</div>`;
+                    card.addEventListener('click', () => showAromaCard(item.aromaName));
+                    aromaGrid.appendChild(card);
+                });
+            }
+
+            function showAromaCard(aromaName) {
+                const aroma = aromaLibraryData.find(a => a.aromaName === aromaName);
+                if (!aroma) return;
+
+                cardDetailContainer.innerHTML = `
+                    <div class="library-card-detail">
+                        <button id="card-detail-close-btn">&times;</button>
+                        <h3>${aroma.aromaName}</h3>
+                        <ul>${aroma.wines.map(wine => `<li>${wine.replace(/([^:]+):/, '<strong>$1:</strong>')}</li>`).join('')}</ul>
+                        <p class="tip">Tip: ${aroma.tip}</p>
+                    </div>
+                `;
+                cardDetailContainer.classList.add('is-visible');
+                document.getElementById('card-detail-close-btn').addEventListener('click', () => {
+                    cardDetailContainer.classList.remove('is-visible');
+                });
+            }
             
-            while (quizQuestions.length < 10) {
-                const questionType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-                const aroma = aromaData[Math.floor(Math.random() * aromaData.length)];
+            function filterAndRender() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+
+                let filteredData = aromaLibraryData;
                 
-                let question = {};
-                
-                switch(questionType) {
-                    case 'grape-to-aroma':
-                        if (aroma.wines.length > 0) {
-                            const wine = aroma.wines[Math.floor(Math.random() * aroma.wines.length)];
-                            question = {
-                                question: `Which aroma is commonly found in ${wine.grape}?`,
-                                hint: wine.description,
-                                correctAnswer: aroma.name,
-                                answers: getRandomAromas(aroma.name, 4)
-                            };
-                        }
-                        break;
-                        
-                    case 'aroma-to-grape':
-                        if (aroma.wines.length > 0) {
-                            const correctWine = aroma.wines[0];
-                            question = {
-                                question: `Which grape variety is known for ${aroma.name} aromas?`,
-                                hint: `This aroma is from the ${formatSubcategory(aroma.subcategory)} category`,
-                                correctAnswer: correctWine.grape,
-                                answers: getRandomGrapes(correctWine.grape, aroma, 4)
-                            };
-                        }
-                        break;
-                        
-                    case 'region-to-aroma':
-                        if (aroma.wines.length > 0) {
-                            const wine = aroma.wines[Math.floor(Math.random() * aroma.wines.length)];
-                            const regionMatch = wine.description.match(/\(([^)]+)\)/);
-                            if (regionMatch) {
-                                question = {
-                                    question: `What aroma is characteristic of ${wine.grape} from ${regionMatch[1]}?`,
-                                    hint: `Think about ${formatSubcategory(aroma.subcategory)} aromas`,
-                                    correctAnswer: aroma.name,
-                                    answers: getRandomAromas(aroma.name, 4, aroma.subcategory)
-                                };
-                            }
-                        }
-                        break;
-                        
-                    case 'category-match':
-                        question = {
-                            question: `Which aroma belongs to the ${formatSubcategory(aroma.subcategory)} category?`,
-                            hint: aroma.tip.substring(0, 50) + '...',
-                            correctAnswer: aroma.name,
-                            answers: getRandomAromasFromDifferentCategories(aroma.name, aroma.subcategory, 4)
-                        };
-                        break;
-                        
-                    case 'tip-match':
-                        const tipSnippet = aroma.tip.substring(0, 80) + '...';
-                        question = {
-                            question: `Which aroma has this characteristic?`,
-                            hint: tipSnippet,
-                            correctAnswer: aroma.name,
-                            answers: getRandomAromas(aroma.name, 4)
-                        };
-                        break;
+                if (activeCategory !== 'all') {
+                    filteredData = filteredData.filter(item => item.category === activeCategory);
+                }
+
+                if (searchTerm) {
+                    filteredData = filteredData.filter(item => item.aromaName.toLowerCase().includes(searchTerm));
                 }
                 
-                if (question.answers && question.answers.length === 4) {
-                    quizQuestions.push(question);
-                }
+                renderAromaGrid(filteredData);
             }
-            
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuizQuestion();
-            document.getElementById('quizModal').style.display = 'block';
-        }
 
-        function getRandomAromas(correctAnswer, count, preferredSubcategory = null) {
-            const answers = [correctAnswer];
-            const usedAnswers = new Set([correctAnswer]);
-            
-            let availableAromas = aromaData.filter(a => a.name !== correctAnswer);
-            if (preferredSubcategory) {
-                // Prefer aromas from the same subcategory for harder questions
-                const sameSubcategory = availableAromas.filter(a => a.subcategory === preferredSubcategory);
-                if (sameSubcategory.length >= count - 1) {
-                    availableAromas = sameSubcategory;
-                }
-            }
-            
-            while (answers.length < count && availableAromas.length > 0) {
-                const randomAroma = availableAromas[Math.floor(Math.random() * availableAromas.length)];
-                if (!usedAnswers.has(randomAroma.name)) {
-                    usedAnswers.add(randomAroma.name);
-                    answers.push(randomAroma.name);
-                }
-            }
-            
-            // Shuffle answers
-            for (let i = answers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [answers[i], answers[j]] = [answers[j], answers[i]];
-            }
-            
-            return answers;
-        }
-
-        function getRandomGrapes(correctGrape, correctAroma, count) {
-            const answers = [correctGrape];
-            const usedGrapes = new Set([correctGrape]);
-            
-            // Get grapes from similar category for harder questions
-            const similarAromas = aromaData.filter(a => 
-                a.subcategory === correctAroma.subcategory && a.name !== correctAroma.name
-            );
-            
-            for (const aroma of similarAromas) {
-                if (answers.length >= count) break;
-                for (const wine of aroma.wines) {
-                    if (!usedGrapes.has(wine.grape) && answers.length < count) {
-                        usedGrapes.add(wine.grape);
-                        answers.push(wine.grape);
-                    }
-                }
-            }
-            
-            // If we need more answers, get from other categories
-            if (answers.length < count) {
-                for (const aroma of aromaData) {
-                    if (answers.length >= count) break;
-                    for (const wine of aroma.wines) {
-                        if (!usedGrapes.has(wine.grape) && answers.length < count) {
-                            usedGrapes.add(wine.grape);
-                            answers.push(wine.grape);
-                        }
-                    }
-                }
-            }
-            
-            // Shuffle
-            for (let i = answers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [answers[i], answers[j]] = [answers[j], answers[i]];
-            }
-            
-            return answers.slice(0, count);
-        }
-
-        function getRandomAromasFromDifferentCategories(correctAnswer, correctSubcategory, count) {
-            const answers = [correctAnswer];
-            const usedAnswers = new Set([correctAnswer]);
-            
-            // Get one from same subcategory
-            const sameSubcategory = aromaData.filter(a => 
-                a.subcategory === correctSubcategory && a.name !== correctAnswer
-            );
-            if (sameSubcategory.length > 0) {
-                const randomSame = sameSubcategory[Math.floor(Math.random() * sameSubcategory.length)];
-                answers.push(randomSame.name);
-                usedAnswers.add(randomSame.name);
-            }
-            
-            // Get others from different subcategories
-            const differentSubcategories = aromaData.filter(a => 
-                a.subcategory !== correctSubcategory && !usedAnswers.has(a.name)
-            );
-            
-            while (answers.length < count && differentSubcategories.length > 0) {
-                const idx = Math.floor(Math.random() * differentSubcategories.length);
-                const randomAroma = differentSubcategories[idx];
-                if (!usedAnswers.has(randomAroma.name)) {
-                    answers.push(randomAroma.name);
-                    usedAnswers.add(randomAroma.name);
-                    differentSubcategories.splice(idx, 1);
-                }
-            }
-            
-            // Shuffle
-            for (let i = answers.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [answers[i], answers[j]] = [answers[j], answers[i]];
-            }
-            
-            return answers;
-        }
-
-        function showQuizQuestion() {
-            const question = quizQuestions[currentQuestionIndex];
-            document.getElementById('quizQuestion').textContent = question.question;
-            document.getElementById('quizHint').textContent = question.hint;
-            
-            // Update progress
-            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-            
-            // Render answer buttons
-            const answerGrid = document.getElementById('answerGrid');
-            answerGrid.innerHTML = '';
-            
-            question.answers.forEach(answer => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.textContent = answer;
-                btn.onclick = () => selectAnswer(answer, question.correctAnswer);
-                answerGrid.appendChild(btn);
-            });
-        }
-
-        function selectAnswer(selected, correct) {
-            const buttons = document.querySelectorAll('.answer-btn');
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if (btn.textContent === correct) {
-                    btn.classList.add('correct');
-                } else if (btn.textContent === selected && selected !== correct) {
-                    btn.classList.add('incorrect');
-                }
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterAndRender();
+                });
             });
             
-            if (selected === correct) {
-                score++;
+            searchBar.addEventListener('input', filterAndRender);
+
+            // --- Game Logic ---
+            function createQuizQuestions() {
+                const questions = [
+                    { type: 'multipleChoice', prompt: "You're enjoying a crisp white wine with vibrant notes of GOOSEBERRY, PASSION FRUIT, and GREEN BELL PEPPER. Which grape is most likely in your glass?", correctAnswer: 'Sauvignon Blanc', incorrectAnswers: ['Chardonnay', 'Riesling', 'Pinot Grigio']},
+                    { type: 'trueFalse', prompt: "True or False: The aroma of coconut 🥥 in a wine is a 'primary' aroma, meaning it comes directly from the grape variety itself.", correctAnswer: 'False', incorrectAnswers: ['True']},
+                    { type: 'fillInTheBlank', prompt: "A classic aroma in Syrah from the Northern Rhône, France, is the distinct smell of __________, which adds a savory, briny depth.", correctAnswer: 'Black Olive', incorrectAnswers: ['Strawberry', 'Vanilla', 'Lemon']},
+                    { type: 'multipleChoice', prompt: "The unmistakable floral and exotic fruit aroma of LYCHEE is a signature of which grape variety?", correctAnswer: 'Gewürztraminer', incorrectAnswers: ['Sauvignon Blanc', 'Pinot Noir', 'Syrah']},
+                    { type: 'trueFalse', prompt: "True or False: A wine with a strong smell of VANILLA almost certainly spent time aging in oak barrels.", correctAnswer: 'True', incorrectAnswers: ['False']},
+                    { type: 'fillInTheBlank', prompt: "The slate-like minerality in many German Rieslings comes from the unique soil of the ______ region.", correctAnswer: 'Mosel', incorrectAnswers: ['Napa Valley', 'Bordeaux', 'Tuscany']},
+                    { type: 'multipleChoice', prompt: "The aroma of BLACK CURRANT (Cassis) is a world-famous signature of which grape?", correctAnswer: 'Cabernet Sauvignon', incorrectAnswers: ['Pinot Noir', 'Gamay', 'Merlot']},
+                    { type: 'trueFalse', prompt: "True or False: The smell of HAZELNUT in a fine white Burgundy is a sign that the wine has gone bad.", correctAnswer: 'False', incorrectAnswers: ['True']},
+                    { type: 'fillInTheBlank', prompt: "The buttery smell 🧈 in many Chardonnays is caused by a process called __________.", correctAnswer: 'Malolactic Fermentation', incorrectAnswers: ['Oxidation', 'Carbonic Maceration', 'Noble Rot']},
+                    { type: 'multipleChoice', prompt: "An earthy, BEETROOT aroma is a classic indicator of a cool-climate red like __________.", correctAnswer: 'Pinot Noir', incorrectAnswers: ['Shiraz', 'Malbec', 'Cabernet Sauvignon']}
+                ];
+                return questions.sort(() => 0.5 - Math.random()).slice(0, 8);
             }
-            
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizQuestions.length) {
-                    showQuizQuestion();
+
+            function startGame() {
+                quizContainer.innerHTML = `
+                    <div class="quiz-modal">
+                        <div class="quiz-content">
+                            <div class="quiz-header">
+                                <div id="progress-bar-full"><div id="progress-bar-fill"></div></div>
+                                <button id="quit-btn" class="quit-button">&times;</button>
+                            </div>
+                            <div id="question-area"><p id="question-text"></p></div>
+                            <div id="answers-area"></div>
+                        </div>
+                    </div>`;
+                
+                document.getElementById('quit-btn').addEventListener('click', quitGame);
+
+                showScreen(quizContainer);
+                currentQuestions = createQuizQuestions();
+                currentQuestionIndex = 0;
+                score = 0;
+                showQuestion();
+            };
+
+            function showQuestion() {
+                const answersArea = document.getElementById('answers-area');
+                const progressBarFill = document.getElementById('progress-bar-fill');
+                const questionText = document.getElementById('question-text');
+                
+                answersArea.innerHTML = '';
+                const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+                progressBarFill.style.width = `${progress}%`;
+
+                const question = currentQuestions[currentQuestionIndex];
+                questionText.innerHTML = question.prompt;
+
+                const allAnswers = [question.correctAnswer, ...question.incorrectAnswers].sort(() => Math.random() - 0.5);
+                
+                allAnswers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.innerHTML = answer;
+                    button.classList.add('answer-btn');
+                    button.addEventListener('click', selectAnswer);
+                    answersArea.appendChild(button);
+                });
+            };
+
+            function selectAnswer(e) {
+                const selectedButton = e.target;
+                const correctAnswer = currentQuestions[currentQuestionIndex].correctAnswer;
+                const answersArea = document.getElementById('answers-area');
+
+                Array.from(answersArea.children).forEach(button => {
+                    button.disabled = true;
+                    if (button.innerHTML === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+
+                if (selectedButton.innerHTML === correctAnswer) {
+                    score++;
                 } else {
-                    showResults();
+                    selectedButton.classList.add('incorrect');
                 }
-            }, 1500);
-        }
 
-        function showResults() {
-            closeModal('quizModal');
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < currentQuestions.length) {
+                        showQuestion();
+                    } else {
+                        showResults();
+                    }
+                }, 1200);
+            };
+
+            function showResults() {
+                resultContainer.innerHTML = `
+                    <div class="quiz-modal">
+                        <div class="quiz-content">
+                            <h2 id="result-title"></h2>
+                            <p id="score-text"></p>
+                            <p id="result-message"></p>
+                            <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta btn-result">Continue Your Journey</a>
+                            <button id="play-again-btn" class="btn btn-result-secondary btn-result">Play Again</button>
+                        </div>
+                    </div>`;
+                
+                const scoreText = document.getElementById('score-text');
+                const resultMessage = document.getElementById('result-message');
+                const resultTitle = document.getElementById('result-title');
+                const playAgainBtn = document.getElementById('play-again-btn');
+                playAgainBtn.addEventListener('click', startGame);
+
+                showScreen(resultContainer);
+                scoreText.textContent = `You Scored: ${score} / ${currentQuestions.length}`;
+                let message = '';
+                let title = '';
+
+                if (score/currentQuestions.length === 1) {
+                    title = "Perfect Score! 🍾";
+                    message = "You're a natural sommelier. Your palate is already incredibly sharp, and you have a rare gift for identifying aromas. To take your skills from gifted to truly masterful, our flashcards will help you solidify your knowledge and explore the subtle nuances that separate the best from the rest. Are you ready to go pro?";
+                } else if (score/currentQuestions.length >= 0.7) {
+                    title = "Excellent Work!";
+                    message = "Your senses are impressively sharp, and you're already identifying aromas like a seasoned enthusiast. You're on the cusp of mastery. To bridge that final gap, our flashcards are the perfect tool to rapidly expand your aroma vocabulary and build the confidence to name any note in the glass. Keep the momentum going!";
+                } else if (score/currentQuestions.length >= 0.4) {
+                    title = "A Great Start!";
+                    message = "You've correctly identified several key aromas, which shows you have a solid foundation to build upon. The world of wine is vast, but you're on the right path. Our flashcards are designed to be the fastest way to connect the dots between what you smell and the words to describe it, turning those 'tip-of-the-tongue' moments into confident calls.";
+                } else {
+                    title = "Your Journey Begins!";
+                    message = "Every great sommelier started exactly where you are now—with a desire to learn. Don't be discouraged! This score is simply your starting point. Our flashcards are the perfect shortcut, designed to make learning these aromas fast, easy, and fun. This is the first step to tasting like an expert.";
+                }
+                resultTitle.textContent = title;
+                resultMessage.innerHTML = message;
+            };
             
-            const percentage = (score / quizQuestions.length) * 100;
-            let title, message;
-            
-            if (percentage === 100) {
-                title = "Perfect Score! 🍾";
-                message = "Incredible! You've mastered wine aromas with a flawless performance. Your palate is truly exceptional. The SOMM DIGI flashcards can help you maintain this expertise and explore even more nuanced aromas.";
-            } else if (percentage >= 70) {
-                title = "Excellent Work!";
-                message = "You're well on your way to becoming a wine aroma expert! Your knowledge is impressive. The SOMM DIGI flashcards will help you perfect those remaining aromas and take your wine journey to the next level.";
-            } else if (percentage >= 40) {
-                title = "A Great Start!";
-                message = "You're building a solid foundation in wine aromas. Every expert started where you are now. The SOMM DIGI flashcards are the perfect tool to accelerate your learning and build confidence in identifying aromas.";
-            } else {
-                title = "Your Journey Begins!";
-                message = "Welcome to the fascinating world of wine aromas! Everyone starts somewhere, and you've taken the first step. The SOMM DIGI flashcards will be your guide, making learning fun and helping you develop your palate systematically.";
-            }
-            
-            document.getElementById('resultsTitle').textContent = title;
-            document.getElementById('resultsMessage').textContent = message;
-            document.getElementById('resultsModal').style.display = 'block';
-        }
+            function quitGame() {
+                showScreen(dashboardContainer);
+            };
 
-        function quitQuiz() {
-            closeModal('quizModal');
-        }
+            // Event Listeners
+            if(playGameBtn) playGameBtn.addEventListener('click', startGame);
+            if(playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
+            if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
+            if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(dashboardContainer));
+            if(closeLibraryBtn) closeLibraryBtn.addEventListener('click', () => showScreen(landingContainer));
 
-        function playAgain() {
-            closeModal('resultsModal');
-            startQuiz();
-        }
-
-        // Window click handler for closing modals
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.style.display = 'none';
-            }
-        }
-
-        // Initialize app on load
-        window.onload = initializeApp;
+            // Initial Render
+            renderAromaGrid(aromaLibraryData);
+            showScreen(landingContainer);
+        });
     </script>
 </body>
 </html>
