@@ -555,9 +555,22 @@ font-family: var(--font-title);
     }
     
     /* Dashboard Mobile */
-    #dashboard-container { 
-        flex-direction: column; 
-    }
+   #dashboard-header { 
+    flex-direction: column; 
+    gap: 15px; 
+    padding: 15px 20px; 
+}
+
+.header-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.header-actions .btn {
+    width: 100% !important;
+    margin-left: 0 !important;
     
     #dashboard-sidebar { 
         width: 100%; 
