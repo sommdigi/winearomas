@@ -514,63 +514,133 @@ font-family: var(--font-title);
         }
 
         /* --- Mobile Responsiveness --- */
-     @media (max-width: 900px) {
-    #dashboard-container { flex-direction: column; }
-    #dashboard-sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; border-right: none; border-bottom: 1px solid var(--border-color); }
-    .sidebar-logo { display: none; }
-    .sidebar-nav-title { display: none; }
-    .sidebar-nav { display: flex; gap: 10px; margin: 0; }
-    .sidebar-nav-item button { white-space: nowrap; }
-    #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
-    #search-bar { width: 100%; }
-    #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-    .quiz-modal { padding: 20px; }
-    #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
-    #answers-area { grid-template-columns: 1fr; }
-    .answer-btn { padding: 15px; }
-    
-    /* ADD ALL NEW CODE HERE */
+@media (max-width: 900px) {
+    /* Landing Page Mobile */
     #landing-container .main-title {
-        font-size: 2.5rem !important;
-        line-height: 1.1;
-        margin: 10px 0;
+        font-size: 2rem !important;
+        line-height: 0.9;
+        margin: 15px 0;
+        text-align: center;
     }
     
     .landing-content {
-        padding: 15px;
+        padding: 20px 15px;
     }
     
     .wine-glass-decoration {
-        width: 80px !important;
-        margin-bottom: 15px;
+        width: 60px !important;
+        margin-bottom: 10px;
     }
     
     #landing-container .subtitle {
-        font-size: 0.9rem;
-        padding: 0 10px;
-        margin-top: 10px;
+        font-size: 0.85rem;
+        padding: 0 15px;
+        margin-top: 15px;
+        line-height: 1.4;
     }
     
     #landing-container .cta-button-group {
         flex-direction: column;
-        gap: 12px;
-        margin-top: 25px;
+        gap: 15px;
+        margin-top: 30px;
+        padding: 0 20px;
     }
     
     .btn {
-        width: 90%;
-        max-width: 280px;
-        padding: 15px 20px;
+        width: 100%;
+        padding: 16px 24px;
         font-size: 1rem;
+        border-radius: 25px;
+    }
+    
+    /* Dashboard Mobile */
+    #dashboard-container { 
+        flex-direction: column; 
+    }
+    
+    #dashboard-sidebar { 
+        width: 100%; 
+        height: auto; 
+        flex-direction: row; 
+        overflow-x: auto; 
+        padding: 10px 15px; 
+        border-right: none; 
+        border-bottom: 1px solid var(--border-color);
+        background: rgba(255,255,255,0.95);
+    }
+    
+    .sidebar-logo { 
+        display: none; 
+    }
+    
+    .sidebar-nav-title { 
+        display: none; 
+    }
+    
+    .sidebar-nav { 
+        display: flex; 
+        gap: 8px; 
+        margin: 0;
+        flex-wrap: nowrap;
+    }
+    
+    .sidebar-nav-item button { 
+        white-space: nowrap;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        border-radius: 20px;
+    }
+    
+    #dashboard-header { 
+        flex-direction: column; 
+        gap: 15px; 
+        padding: 15px 20px; 
+    }
+    
+    #search-bar { 
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    #aroma-grid { 
+        padding: 15px; 
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
     
     .aroma-card {
-        height: 100px !important;
-        padding: 15px !important;
+        height: 80px !important;
+        padding: 10px !important;
+        border-radius: 8px;
     }
     
     .aroma-card-name {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
+        font-weight: 600;
+    }
+    
+    /* Quiz Mobile */
+    .quiz-modal { 
+        padding: 20px 15px;
+        margin: 10px;
+    }
+    
+    #question-text { 
+        font-size: 1.2rem; 
+        min-height: 100px; 
+        margin: 15px 0 20px 0;
+    }
+    
+    #answers-area { 
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .answer-btn { 
+        padding: 15px;
+        font-size: 0.95rem;
+        border-radius: 8px;
     }
 }
     </style>
