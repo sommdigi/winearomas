@@ -515,14 +515,14 @@ font-family: var(--font-title);
 
         /* --- Mobile Responsiveness --- */
 @media (max-width: 900px) {
-    /* Landing Page Mobile */
+    /* Landing Page - Keep same */
     #landing-container .main-title {
-    font-size: 3rem !important;
-    font-weight: 900 !important;
-    line-height: 0.9;
-    margin: 15px 0;
-    text-align: center;
-}
+        font-size: 3rem !important;
+        font-weight: 900 !important;
+        line-height: 0.9;
+        margin: 15px 0;
+        text-align: center;
+    }
     
     .landing-content {
         padding: 20px 15px;
@@ -554,69 +554,43 @@ font-family: var(--font-title);
         border-radius: 25px;
     }
     
-    /* Dashboard Mobile */
-   #dashboard-header { 
-    flex-direction: column; 
-    gap: 15px; 
-    padding: 15px 20px; 
-}
-
-.header-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-
-.header-actions .btn {
-    width: 100% !important;
-    margin-left: 0 !important;
+    /* Dashboard - SUPER SIMPLE */
+    #dashboard-container { 
+        flex-direction: column; 
+    }
     
     #dashboard-sidebar { 
-        width: 100%; 
-        height: auto; 
-        flex-direction: row; 
-        overflow-x: auto; 
-        padding: 10px 15px; 
-        border-right: none; 
-        border-bottom: 1px solid var(--border-color);
-        background: rgba(255,255,255,0.95);
+        display: none !important;
     }
     
-    .sidebar-logo { 
-        display: none; 
-    }
-    
-    .sidebar-nav-title { 
-        display: none; 
-    }
-    
-    .sidebar-nav { 
-        display: flex; 
-        gap: 8px; 
-        margin: 0;
-        flex-wrap: nowrap;
-    }
-    
-    .sidebar-nav-item button { 
-        white-space: nowrap;
-        padding: 8px 12px;
-        font-size: 0.85rem;
-        border-radius: 20px;
+    #dashboard-main {
+        width: 100% !important;
     }
     
     #dashboard-header { 
-        flex-direction: column; 
-        gap: 15px; 
-        padding: 15px 20px; 
+        padding: 15px 20px;
+        text-align: center;
     }
     
-#search-bar { 
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
+    #search-bar { 
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .header-actions .btn {
+        flex: 1;
+        max-width: 120px;
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
     
     #aroma-grid { 
         padding: 15px; 
@@ -635,7 +609,7 @@ font-family: var(--font-title);
         font-weight: 600;
     }
     
-    /* Quiz Mobile */
+    /* Quiz */
     .quiz-modal { 
         padding: 20px 15px;
         margin: 10px;
