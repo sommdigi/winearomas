@@ -218,6 +218,7 @@
             margin-left: 15px;
         }
 
+        /* Aroma grid now uses fixed row height so every card appears the same size */
         #aroma-grid {
             flex-grow: 1;
             padding: 40px;
@@ -225,17 +226,29 @@
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
             overflow-y: auto;
+            /* NEW */
+            grid-auto-rows: 160px; /* uniform card height */
         }
-        
         .aroma-card {
             background: #FFFFFF;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 25px;
+            /* NEW layout improvements */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            height: 100%; /* fill the fixed grid row */
+        }
+        .aroma-card-name {
+            font-size: 1.2rem; /* slightly larger for readability */
+            font-weight: 600;
+            line-height: 1.3;
+            word-break: break-word;
         }
         
         .aroma-card:hover {
@@ -244,11 +257,6 @@
             border-color: var(--brand-burgundy);
         }
         
-        .aroma-card-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
         /* --- Detail Card Modal --- */
         .modal-container {
             background: rgba(0,0,0,0.5);
@@ -466,7 +474,8 @@
             .sidebar-nav-item button { white-space: nowrap; }
             #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
             #search-bar { width: 100%; }
-            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            /* Mobile grid tweaks: narrower columns & shorter rows */
+            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); grid-auto-rows: 130px; }
             .quiz-modal { padding: 20px; }
             #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
             #answers-area { grid-template-columns: 1fr; }
