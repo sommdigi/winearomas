@@ -514,21 +514,65 @@ font-family: var(--font-title);
         }
 
         /* --- Mobile Responsiveness --- */
-        @media (max-width: 900px) {
-            #dashboard-container { flex-direction: column; }
-            #dashboard-sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; border-right: none; border-bottom: 1px solid var(--border-color); }
-            .sidebar-logo { display: none; }
-            .sidebar-nav-title { display: none; }
-            .sidebar-nav { display: flex; gap: 10px; margin: 0; }
-            .sidebar-nav-item button { white-space: nowrap; }
-            #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
-            #search-bar { width: 100%; }
-            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-            .quiz-modal { padding: 20px; }
-            #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
-            #answers-area { grid-template-columns: 1fr; }
-            .answer-btn { padding: 15px; }
-        }
+     @media (max-width: 900px) {
+    #dashboard-container { flex-direction: column; }
+    #dashboard-sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; border-right: none; border-bottom: 1px solid var(--border-color); }
+    .sidebar-logo { display: none; }
+    .sidebar-nav-title { display: none; }
+    .sidebar-nav { display: flex; gap: 10px; margin: 0; }
+    .sidebar-nav-item button { white-space: nowrap; }
+    #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
+    #search-bar { width: 100%; }
+    #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .quiz-modal { padding: 20px; }
+    #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
+    #answers-area { grid-template-columns: 1fr; }
+    .answer-btn { padding: 15px; }
+    
+    /* ADD ALL NEW CODE HERE */
+    #landing-container .main-title {
+        font-size: 2.5rem !important;
+        line-height: 1.1;
+        margin: 10px 0;
+    }
+    
+    .landing-content {
+        padding: 15px;
+    }
+    
+    .wine-glass-decoration {
+        width: 80px !important;
+        margin-bottom: 15px;
+    }
+    
+    #landing-container .subtitle {
+        font-size: 0.9rem;
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+    
+    #landing-container .cta-button-group {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 25px;
+    }
+    
+    .btn {
+        width: 90%;
+        max-width: 280px;
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+    
+    .aroma-card {
+        height: 100px !important;
+        padding: 15px !important;
+    }
+    
+    .aroma-card-name {
+        font-size: 1rem !important;
+    }
+}
     </style>
 </head>
 <body>
