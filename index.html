@@ -6,17 +6,17 @@
     <title>SOMM DIGI | Wine Aroma Experience</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #FFFFFF;
-            --text-color: #111827;
-            --brand-burgundy: #5C2C3B;
-            --cream-text: #F5F3EF;
-            --yellow-accent: #FFD700;
-            --font-title: 'Cormorant Garamond', serif;
+            --bg-color: #0D0D0D;
+            --surface-color: #1A1A1A;
+            --text-color: #FFFFFF;
+            --text-muted-color: #A0A0A0;
+            --accent-red: #D946EF;
+            --accent-glow: rgba(217, 70, 239, 0.3);
+            --border-color: #2D2D2D;
             --font-body: 'Inter', sans-serif;
-            --border-color: #E5E7EB;
         }
 
         body {
@@ -25,11 +25,16 @@
             font-family: var(--font-body);
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Prevent body scroll */
         }
 
         .app-wrapper {
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             position: relative;
         }
@@ -41,9 +46,9 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(125deg, #fde8d0, #fbcfe8, #ffffff, #fde8d0);
+            background: linear-gradient(135deg, #0D0D0D, #3a1c32, #0D0D0D);
             background-size: 400% 400%;
-            animation: gradient-animation 25s ease infinite;
+            animation: gradient-animation 20s ease infinite;
         }
 
         @keyframes gradient-animation {
@@ -64,6 +69,7 @@
             pointer-events: none;
             transition: opacity 0.5s ease-in-out;
             z-index: 1;
+            box-sizing: border-box;
         }
 
         .container.is-visible {
@@ -74,6 +80,7 @@
         /* --- Landing Page --- */
         #landing-container {
             justify-content: center;
+            align-items: center;
         }
         
         .landing-content {
@@ -81,6 +88,7 @@
             animation: fadeInSlideUp 1s ease-out 0.2s forwards;
             opacity: 0;
             position: relative;
+            padding: 20px;
         }
         
         @keyframes fadeInSlideUp {
@@ -89,133 +97,172 @@
         }
         
         #landing-container .main-title {
-            font-family: var(--font-title);
-            font-size: 3.5rem;
+            font-size: 8vw;
             font-weight: 700;
             margin: 0;
             color: var(--text-color);
-            letter-spacing: -1.5px;
-            line-height: 1.2;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-transform: uppercase;
         }
+        
+        #landing-container .main-title .large { font-size: 1.2em; }
+        #landing-container .main-title .small { font-size: 0.6em; vertical-align: middle; }
+        #landing-container .main-title .medium { font-size: 0.9em; }
 
         #landing-container .subtitle {
-            font-family: var(--font-body);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 400;
-            margin-top: 15px;
-            color: #4B5563;
-            max-width: 480px;
+            margin-top: 20px;
+            color: var(--text-muted-color);
+            max-width: 520px;
             line-height: 1.6;
             margin-left: auto;
             margin-right: auto;
         }
         
+        #landing-container .subtitle span {
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+        }
+        
+        #landing-container .subtitle span:hover {
+            color: var(--text-color);
+            font-weight: 600;
+            transform: scale(1.1);
+        }
+        
         #landing-container .cta-button-group {
-            margin-top: 40px;
+            margin-top: 50px;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
             align-items: center;
         }
         
-        /* --- Dashboard Layout --- */
-        #dashboard-container {
-            flex-direction: row;
-        }
-
-        #dashboard-sidebar {
-            width: 280px;
-            height: 100%;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid var(--border-color);
-            padding: 30px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-        
-        .sidebar-logo {
-            font-family: var(--font-title);
-            font-size: 2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 40px;
-            cursor: pointer;
-        }
-
-        .sidebar-nav-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #6B7280;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            padding: 0 15px;
-        }
-
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
-        
-        .sidebar-nav-item button {
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            padding: 12px 15px;
-            font-size: 1rem;
+        /* --- Buttons --- */
+        .btn {
             font-family: var(--font-body);
-            border-radius: 6px;
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.2s, color 0.2s;
-            color: #374151;
-        }
-        
-        .sidebar-nav-item button:hover {
-            background-color: #F3F4F6;
-        }
-        
-        .sidebar-nav-item button.active {
-            background-color: var(--brand-burgundy);
-            color: var(--cream-text);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            padding: 16px 32px;
             font-weight: 600;
-        }
-
-        #dashboard-main {
-            flex-grow: 1;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            position: relative;
             overflow: hidden;
-            background-color: var(--bg-color);
+            background: transparent;
+            color: var(--text-muted-color);
+            border: 1px solid var(--border-color);
         }
 
-        #dashboard-header {
+        .btn:hover {
+            color: var(--text-color);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .btn .line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .btn:hover .line {
+            transform: scaleX(1);
+        }
+
+        /* --- Library Modal --- */
+        .modal-view {
+            background: var(--bg-color);
+            justify-content: flex-start;
+        }
+        
+        .modal-header {
             padding: 20px 40px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(248, 249, 250, 0.8);
-            backdrop-filter: blur(8px);
+            width: 100%;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .modal-close-btn {
+            font-size: 2.5rem;
+            color: var(--text-muted-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .modal-close-btn:hover {
+            color: var(--accent-red);
+        }
+        
+        #library-main {
+            display: flex;
+            width: 100%;
+            height: calc(100% - 81px); /* Height of header */
+        }
+        #library-sidebar {
+            width: 280px;
+            height: 100%;
+            background: var(--surface-color);
+            border-right: 1px solid var(--border-color);
+            padding: 30px;
+            box-sizing: border-box;
+            overflow-y: auto;
             flex-shrink: 0;
         }
-        
-        #search-bar {
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            width: 300px;
-            background-color: var(--bg-color);
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
         }
-        
-        .header-actions .btn {
-            margin-left: 15px;
+        .sidebar-nav-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        .sidebar-nav-item button {
+            background: none;
+            border: none;
+            color: var(--text-muted-color);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 8px 0;
+            width: 100%;
+            text-align: left;
+            transition: color 0.2s ease;
+        }
+        .sidebar-nav-item button:hover {
+            color: var(--text-color);
+        }
+        .sidebar-nav-item button.active {
+            color: var(--accent-red);
+            font-weight: 600;
         }
 
         #aroma-grid {
@@ -225,25 +272,26 @@
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
             overflow-y: auto;
+            height: 100%;
+            box-sizing: border-box;
         }
-        
         .aroma-card {
-            background: #FFFFFF;
+            background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 25px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
         .aroma-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
-            border-color: var(--brand-burgundy);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-color: var(--accent-red);
         }
-        
         .aroma-card-name {
             font-size: 1.25rem;
             font-weight: 600;
@@ -251,32 +299,32 @@
 
         /* --- Detail Card Modal --- */
         .modal-container {
-            background: rgba(0,0,0,0.5);
-            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 30;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
         }
         .library-card-detail {
-            background: var(--cream-text);
-            color: var(--text-color);
+            background: var(--surface-color);
             padding: 40px;
             border-radius: 15px;
             max-width: 500px;
             width: 90%;
             text-align: left;
             position: relative;
+            border: 1px solid var(--border-color);
+            animation: fadeInSlideUp 0.5s ease-out forwards;
         }
         .library-card-detail h3 {
-            font-family: var(--font-title);
             font-size: 2.5rem;
             margin-top: 0;
-            color: var(--brand-burgundy);
+            color: var(--accent-red);
         }
         .library-card-detail ul {
             list-style: none;
             padding: 0;
             margin: 20px 0;
+            color: var(--text-muted-color);
         }
         .library-card-detail li {
             margin-bottom: 10px;
@@ -284,7 +332,7 @@
         }
         .library-card-detail .tip {
             font-style: italic;
-            color: #4B5563;
+            color: #888;
             margin-top: 20px;
         }
         #card-detail-close-btn {
@@ -295,40 +343,11 @@
             background: none;
             border: none;
             cursor: pointer;
+            color: var(--text-muted-color);
+            transition: color 0.2s ease;
         }
-        
-        /* --- Buttons --- */
-        .btn {
-            font-family: var(--font-body);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9rem;
-            padding: 12px 24px;
-            font-weight: 600;
-        }
-        
-        .btn-primary-cta {
-            background: var(--brand-burgundy);
-            color: var(--cream-text);
-        }
-        .btn-primary-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(92, 44, 59, 0.2);
-        }
-
-        .btn-secondary-cta {
-            background-color: transparent;
-            color: var(--text-color);
-            border: 1px solid #d1d5db;
-        }
-        .btn-secondary-cta:hover {
-            transform: translateY(-3px);
-            border-color: var(--text-color);
+        #card-detail-close-btn:hover {
+            color: var(--accent-red);
         }
         
         /* --- Quiz Modal --- */
@@ -337,49 +356,60 @@
             align-items: center;
         }
         .quiz-modal {
-            background-color: var(--brand-burgundy);
-            color: var(--cream-text);
+            background-color: var(--surface-color);
+            color: var(--text-color);
             padding: 40px;
             border-radius: 15px;
             width: 100%;
             max-width: 700px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            box-sizing: border-box;
-            overflow: hidden;
+            border: 1px solid var(--border-color);
+            animation: fadeInSlideUp 0.5s ease-out forwards;
         }
         
         .quiz-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5px 15px 5px;
+            margin-bottom: 20px;
         }
 
         .quit-button {
-            font-size: 2.5rem;
-            color: var(--cream-text);
+            color: var(--text-muted-color);
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            line-height: 1;
+        }
+        .quit-button:hover {
+            color: var(--accent-red);
         }
 
         #progress-bar-full {
-            background-color: rgba(245, 243, 239, 0.3);
+            width: 100%;
+            height: 8px;
+            background-color: #333;
+            border-radius: 4px;
+            margin-right: 20px;
+            overflow: hidden;
         }
 
         #progress-bar-fill {
-            background-color: var(--cream-text);
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-red);
+            border-radius: 4px;
+            transition: width 0.3s ease-in-out;
         }
-
+        
         #question-text {
-            font-family: var(--font-body);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
+            font-weight: 500;
             line-height: 1.5;
-            min-height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
+            min-height: 100px;
             margin-bottom: 30px;
-            text-align: center;
         }
 
         #answers-area {
@@ -389,86 +419,114 @@
         }
 
         .answer-btn {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            color: var(--cream-text);
-            border: 1px solid rgba(245, 243, 239, 0.2);
+            background: #2D2D2D;
+            color: var(--text-muted-color);
+            border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
-            font-size: 1.1rem;
-            font-family: var(--font-body);
+            font-size: 1rem;
+            text-align: left;
+            transition: all 0.2s ease;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .answer-btn:hover:not([disabled]) {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            background: #3a3a3a;
+            color: var(--text-color);
+            border-color: #666;
+            transform: translateY(-2px);
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
         }
 
         .answer-btn.correct {
-            background: var(--yellow-accent);
-            color: var(--text-color);
-            border-color: var(--yellow-accent);
-            animation: pulse 0.6s ease;
+            background: var(--accent-red);
+            color: #FFFFFF;
+            border-color: var(--accent-red);
+            font-weight: 600;
         }
-
+        
         .answer-btn.incorrect {
-            animation: shake 0.5s ease;
+            background: #5a2d2d;
+            color: #ffc4c4;
+            border-color: #8c4b4b;
         }
 
-        .answer-btn[disabled] {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
-        }
-
-        /* --- Result Screen --- */
+        /* --- Result Modal --- */
         #result-title {
-            font-size: 2.5rem;
-            color: var(--cream-text);
-            font-family: var(--font-title);
+            color: var(--accent-red);
         }
         #score-text {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 10px 0;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
         #result-message {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            color: var(--text-muted-color);
             line-height: 1.6;
+            margin-bottom: 40px;
         }
         .btn-result {
-            padding: 15px 30px;
-            font-size: 1.1rem;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+            box-sizing: border-box;
         }
+        .btn-primary-cta {
+             background-color: var(--accent-red);
+             color: var(--text-color);
+             border-color: var(--accent-red);
+        }
+        .btn-primary-cta:hover {
+            background-color: #c535d4;
+            border-color: #c535d4;
+        }
+        .btn-result-secondary {
+            background-color: transparent;
+            color: var(--text-muted-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-result-secondary:hover {
+            color: var(--text-color);
+            border-color: var(--text-color);
+        }
+
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 900px) {
-            #dashboard-container { flex-direction: column; }
-            #dashboard-sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 15px; border-right: none; border-bottom: 1px solid var(--border-color); }
-            .sidebar-logo { display: none; }
-            .sidebar-nav-title { display: none; }
-            .sidebar-nav { display: flex; gap: 10px; margin: 0; }
-            .sidebar-nav-item button { white-space: nowrap; }
-            #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
-            #search-bar { width: 100%; }
+            #landing-container .main-title { font-size: 12vw; }
+            #landing-container .subtitle { font-size: 1rem; }
+            #landing-container .cta-button-group { flex-direction: column; width: 80%; }
+            #landing-container .cta-button-group .btn { width: 100%; box-sizing: border-box; text-align: center;}
+            
+            .modal-header { padding: 15px 20px; }
+            
+            #library-main { flex-direction: column; height: calc(100% - 71px); }
+            #library-sidebar { 
+                width: 100%; 
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 15px;
+                overflow-y: initial;
+                flex-shrink: 1;
+                display: flex;
+                overflow-x: auto;
+            }
+             #library-sidebar .sidebar-nav {
+                margin: 0 10px 0 0;
+                padding-right: 10px;
+                border-right: 1px solid var(--border-color);
+             }
+             #library-sidebar .sidebar-nav:last-child {
+                border-right: none;
+             }
+
             #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-            .quiz-modal { padding: 20px; }
-            #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
+            
+            .quiz-modal { padding: 20px; width: 90%; }
+            #question-text { font-size: 1.2rem; min-height: 80px; }
             #answers-area { grid-template-columns: 1fr; }
             .answer-btn { padding: 15px; }
         }
@@ -478,103 +536,81 @@
     <div class="app-wrapper">
         <div id="dynamic-background"></div>
 
-        <!-- Landing Page Container -->
         <div id="landing-container" class="container is-visible">
              <div class="landing-content">
-                <h1 class="main-title">SOMM DIGI Wine Aromas</h1>
-                <h2 class="subtitle">Smell, play, remember! Wine aromas made fun and easy.</h2>
+                <h1 class="main-title">
+                    <span class="large">SOMM</span> <span class="small">DIGI</span> <span class="large">Wine</span> <span class="medium">Aromas</span>
+                </h1>
+                <h2 class="subtitle">
+                    <span>For</span> <span>wine</span> <span>pros</span> <span>and</span> <span>lovers</span> <span>alike.</span>
+                </h2>
                 <div class="cta-button-group">
-                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta">Get Cards on Amazon</a>
-                    <button id="play-game-btn-landing" class="btn btn-secondary-cta">Play the Game</button>
-                    <button id="explore-library-btn" class="btn btn-secondary-cta">Aroma Library</button>
+                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn"><span class="btn-text">Get Cards on Amazon</span><span class="line"></span></a>
+                    <button id="play-game-btn-landing" class="btn"><span class="btn-text">Play the Game</span><span class="line"></span></button>
+                    <button id="explore-library-btn" class="btn"><span class="btn-text">Aroma Library</span><span class="line"></span></button>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard Container -->
-        <div id="dashboard-container" class="container">
-            <div id="dashboard-sidebar">
-                <div class="sidebar-logo">SOMM DIGI</div>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-title">Categories</li>
-                    <li class="sidebar-nav-item"><button class="filter-btn active" data-category="all">All Aromas</button></li>
-                </ul>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-title">Fruit</li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Red Fruit">Red Fruit</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Black Fruit">Black Fruit</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Citrus Fruit">Citrus Fruit</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tree Fruit">Tree Fruit</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tropical Fruit">Tropical Fruit</button></li>
-                </ul>
-                 <ul class="sidebar-nav">
-                    <li class="sidebar-nav-title">From the Earth</li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Floral">Floral</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Herbal">Herbal</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Earthy">Earthy</button></li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Mineral">Mineral</button></li>
-                </ul>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-title">Winemaking</li>
-                    <li class="sidebar-nav-item"><button class="filter-btn" data-category="Spice & Oak">Spice & Oak</button></li>
-                </ul>
+        <div id="library-container" class="container modal-view">
+            <div class="modal-header">
+                <h2 class="modal-title">Aroma Library</h2>
+                <button class="modal-close-btn" data-target="landing-container">&times;</button>
             </div>
-            <div id="dashboard-main">
-                <div id="dashboard-header">
-                    <input type="text" id="search-bar" placeholder="Search for an aroma...">
-                    <div class="header-actions">
-                        <button id="play-game-btn" class="btn btn-secondary-cta">Play the Game</button>
-                        <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta">Get the Cards</a>
-                    </div>
+            <div id="library-main">
+                <div id="library-sidebar">
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-nav-title">Categories</li>
+                        <li class="sidebar-nav-item"><button class="filter-btn active" data-category="all">All Aromas</button></li>
+                    </ul>
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-nav-title">Fruit</li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Red Fruit">Red Fruit</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Black Fruit">Black Fruit</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Citrus Fruit">Citrus Fruit</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tree Fruit">Tree Fruit</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Tropical Fruit">Tropical Fruit</button></li>
+                    </ul>
+                     <ul class="sidebar-nav">
+                        <li class="sidebar-nav-title">From the Earth</li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Floral">Floral</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Herbal">Herbal</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Earthy">Earthy</button></li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Mineral">Mineral</button></li>
+                    </ul>
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-nav-title">Winemaking</li>
+                        <li class="sidebar-nav-item"><button class="filter-btn" data-category="Spice & Oak">Spice & Oak</button></li>
+                    </ul>
                 </div>
                 <div id="aroma-grid"></div>
             </div>
         </div>
 
-        <!-- Quiz Container -->
         <div id="quiz-container" class="container">
-             <div class="quiz-modal">
-                <div class="quiz-content">
-                    <div class="quiz-header">
-                        <div id="progress-bar-full">
-                            <div id="progress-bar-fill"></div>
-                        </div>
-                        <button id="quit-btn" class="quit-button">&times;</button>
-                    </div>
-                    <div id="question-area">
-                        <p id="question-text"></p>
-                    </div>
-                    <div id="answers-area"></div>
-                </div>
-            </div>
         </div>
 
-        <!-- Result Screen Container -->
         <div id="result-container" class="container">
-            <div class="quiz-modal">
-                <div class="quiz-content">
-                    <h2 id="result-title"></h2>
-                    <p id="score-text"></p>
-                    <p id="result-message"></p>
-                    <a href="https://amzn.to/46K1mrB" target="_blank" class="btn btn-primary-cta btn-result">Continue Your Journey</a>
-                    <button id="play-again-btn" class="btn btn-result-secondary btn-result">Play Again</button>
-                </div>
-            </div>
         </div>
 
-        <!-- Aroma Card Detail Modal -->
         <div id="library-card-detail-container" class="container modal-container">
-            <div class="library-card-detail">
-                <button id="card-detail-close-btn">&times;</button>
-                <h3 id="card-detail-title"></h3>
-                <ul id="card-detail-wines"></ul>
-                <p class="tip" id="card-detail-tip"></p>
-            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const landingContainer = document.getElementById('landing-container');
+            const libraryContainer = document.getElementById('library-container');
+            const quizContainer = document.getElementById('quiz-container');
+            const resultContainer = document.getElementById('result-container');
+            const aromaGrid = document.getElementById('aroma-grid');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cardDetailContainer = document.getElementById('library-card-detail-container');
+            const playGameBtnLanding = document.getElementById('play-game-btn-landing');
+            const exploreLibraryBtn = document.getElementById('explore-library-btn');
+            const closeLibraryBtn = document.querySelector('#library-container .modal-close-btn');
+
             const aromaLibraryData = [
                 // Red Fruit
                 { aromaName: 'Strawberry', category: 'Red Fruit', wines: ['Pinot Noir: Subtle strawberry, elegant styles (France, New World).', 'Sangiovese: Youthful, expressive red fruit (Chianti, Italy).', 'Zinfandel: Bold, ripe strawberry notes (Lodi, USA).', 'Tempranillo: Balanced red fruit, lightly oaked (Rioja, Spain).', 'Grenache: Vibrant, juicy strawberry tones (Rhône, France).', 'Gamay: Fresh and bright red fruit (Beaujolais, France).'], tip: 'Strawberry aromas often resemble fresh berries or strawberry jam-think summer fruit bowls.' },
@@ -604,7 +640,7 @@
                 { aromaName: 'Green Apple', category: 'Tree Fruit', wines: ['Riesling: Germany, e.g., Mosel (dry/off-dry).', 'Pinot Gris/Pinot Grigio: Italy (dry styles).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Sauvignon Blanc: Sancerre AOP (France).'], tip: 'Green apple aromas add crisp, fresh acidity, commonly found in youthful, high-acid white wines.'},
                 { aromaName: 'Yellow Apple', category: 'Tree Fruit', wines: ['Chenin Blanc: Loire Valley, e.g., Vouvray (France)', 'Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Chardonnay: Chablis (France), Sonoma Coast (USA), Côte de Beaune (France), Margaret River (Australia).', 'Marsanne & Roussanne: Northern Rhône, e.g., St. Joseph, Hermitage (France).', 'Grüner Veltliner: Austria, Klassik & Reserve styles', 'Sweet Wines: Tokaji Aszú (Hungary), Sauternes/Barsac (France).'], tip: 'Yellow apple aromas add mellow, rounded fruitiness, found in wines from moderate to warm climates.'},
                 { aromaName: 'Pear', category: 'Tree Fruit', wines: ['Pinot Grigio: Trentino, Alto Adige (Italy).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Chardonnay (cool climate): Chablis AOP (France).'], tip: 'Pear aromas bring a crisp, delicate fruitiness, common in cool-climate white wines and dry whites from Italy and France.'},
-                { aromaName: 'Quince', category: 'Tree Fruit', wines: ['Viognier: Northern Rhône Valley, e.g., Condrieu AOP (France).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Riesling: Riper styles, e.g., Pfalz (Germany).', 'Chenin Blanc: Vouvray “Demi-Sec” or “Moelleux” (France), or dry from warmer vintages.', 'Pinot Gris/Pinot Grigio: Slightly sweeter styles (Italy).'], tip: 'Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines.'},
+                { aromaName: 'Quince', category: 'Tree Fruit', wines: ['Viognier: Northern Rhône Valley, e.g., Condrieu AOP (France).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Riesling: Riper styles, e.g., Pfalz (Germany).', 'Chenin Blanc: Vouvray "Demi-Sec" or "Moelleux" (France), or dry from warmer vintages.', 'Pinot Gris/Pinot Grigio: Slightly sweeter styles (Italy).'], tip: 'Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines.'},
                 { aromaName: 'White Peach', category: 'Tree Fruit', wines: ['Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Riesling: Germany (Kabinett from Mosel, Rheinhessen), Austria (Wachau, Kamptal, Kremstal).', 'Torrontés & Muscat: Alsace (France), Salta (Argentina).'], tip: 'White peach aromas add a juicy, fresh character, typical in vibrant, aromatic whites.'},
                 { aromaName: 'Peach', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; riper peach notes often indicate warmer climates.', 'Gewürztraminer: Alsace (France), especially Vendange Tardive or Sélection de Grains Nobles.', 'Viognier: Northern Rhône Valley, Condrieu (France).'], tip: 'Peach aromas suggest ripeness and are often found in fuller, aromatic whites from warmer regions or those with residual sugar.'},
                 { aromaName: 'Nectarine', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; warmer climates or vintages.', 'Gewürztraminer: Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles.', 'Viognier: Northern Rhône, Condrieu (France).'], tip: 'Nectarine notes suggest ripeness and warmth, typical in aromatic, rich white wines.'},
@@ -651,7 +687,7 @@
                 { aromaName: 'Basil', category: 'Herbal', wines: ['Riesling: Germany.', 'Muscat: Alsace (France).'], tip: 'Basil aromas can add a fresh, herbal quality to wines from cooler regions.' },
                 { aromaName: 'Lemongrass', category: 'Herbal', wines: ['Sauvignon Blanc: Various regions worldwide.', 'Viognier: Condrieu (France).'], tip: 'Lemongrass aromas contribute a zesty, citrusy freshness.' },
                 { aromaName: 'Parsley', category: 'Herbal', wines: ['Grüner Veltliner: Cooler vintages or less ripe examples from Austria.'], tip: 'Parsley aromas add a fresh, green note to Grüner Veltliner, often found in younger styles.' },
-                { aromaName: 'Chive', category: 'Herbal', wines: ['Cortese: Gavi di Gavi (Italy).', 'Pinot Grigio: Various regions worldwide.', 'Garganega: Soave (Italy)', 'Muscadet: Muscadet “sur lie” (France).'], tip: 'Chive aromas contribute a fresh, herbal character to white wines.' },
+                { aromaName: 'Chive', category: 'Herbal', wines: ['Cortese: Gavi di Gavi (Italy).', 'Pinot Grigio: Various regions worldwide.', 'Garganega: Soave (Italy)', 'Muscadet: Muscadet "sur lie" (France).'], tip: 'Chive aromas contribute a fresh, herbal character to white wines.' },
                 { aromaName: 'Blackcurrant Leaf', category: 'Herbal', wines: ['Sauvignon Blanc: New Zealand, Chile, South Africa', 'Verdejo: Rueda (Spain)'], tip: 'Blackcurrant leaf aromas impart a fresh, herbal character.' },
                 { aromaName: 'Rosemary', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Rosemary aromas add an herbal, aromatic complexity to wines from the Southern Rhône.' },
                 { aromaName: 'Thyme', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Thyme aromas add an earthy, herbal note to Southern Rhône blends.' },
@@ -696,33 +732,23 @@
                 { aromaName: 'Burnt Match', category: 'Mineral', wines: ['Chardonnay: Burgundy (France).'], tip: 'Burnt match aromas are typically caused by sulfur compounds from reductive winemaking or sulfur dioxide additions.'}
             ];
 
-            // DOM Elements
-            const landingContainer = document.getElementById('landing-container');
-            const dashboardContainer = document.getElementById('dashboard-container');
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const aromaGrid = document.getElementById('aroma-grid');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const searchBar = document.getElementById('search-bar');
-            const cardDetailContainer = document.getElementById('library-card-detail-container');
-            const playGameBtn = document.getElementById('play-game-btn');
-            const playGameBtnLanding = document.getElementById('play-game-btn-landing');
-            const logo = document.querySelector('.sidebar-logo');
-            const exploreLibraryBtn = document.getElementById('go-to-dashboard-btn');
-            const closeLibraryBtn = document.querySelector('#library-container .modal-close-btn');
-
             // Game State
             let currentQuestions = [];
             let currentQuestionIndex = 0;
             let score = 0;
 
             function showScreen(screen) {
+                // Hide all main containers
                 landingContainer.classList.remove('is-visible');
-                dashboardContainer.classList.remove('is-visible');
+                libraryContainer.classList.remove('is-visible');
                 quizContainer.classList.remove('is-visible');
                 resultContainer.classList.remove('is-visible');
                 cardDetailContainer.classList.remove('is-visible');
-                screen.classList.add('is-visible');
+                
+                // Show the target screen
+                if (screen) {
+                    screen.classList.add('is-visible');
+                }
             };
 
             function renderAromaGrid(data) {
@@ -734,7 +760,7 @@
                     card.addEventListener('click', () => showAromaCard(item.aromaName));
                     aromaGrid.appendChild(card);
                 });
-            }
+            };
 
             function showAromaCard(aromaName) {
                 const aroma = aromaLibraryData.find(a => a.aromaName === aromaName);
@@ -752,24 +778,18 @@
                 document.getElementById('card-detail-close-btn').addEventListener('click', () => {
                     cardDetailContainer.classList.remove('is-visible');
                 });
-            }
+            };
             
             function filterAndRender() {
-                const searchTerm = searchBar.value.toLowerCase();
                 const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
-
                 let filteredData = aromaLibraryData;
                 
                 if (activeCategory !== 'all') {
                     filteredData = filteredData.filter(item => item.category === activeCategory);
                 }
-
-                if (searchTerm) {
-                    filteredData = filteredData.filter(item => item.aromaName.toLowerCase().includes(searchTerm));
-                }
                 
                 renderAromaGrid(filteredData);
-            }
+            };
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -779,8 +799,6 @@
                 });
             });
             
-            searchBar.addEventListener('input', filterAndRender);
-
             // --- Game Logic ---
             function createQuizQuestions() {
                 const questions = [
@@ -796,7 +814,7 @@
                     { type: 'multipleChoice', prompt: "An earthy, BEETROOT aroma is a classic indicator of a cool-climate red like __________.", correctAnswer: 'Pinot Noir', incorrectAnswers: ['Shiraz', 'Malbec', 'Cabernet Sauvignon']}
                 ];
                 return questions.sort(() => 0.5 - Math.random()).slice(0, 8);
-            }
+            };
 
             function startGame() {
                 quizContainer.innerHTML = `
@@ -821,6 +839,10 @@
             };
 
             function showQuestion() {
+                if (currentQuestionIndex >= currentQuestions.length) {
+                    showResults();
+                    return;
+                }
                 const answersArea = document.getElementById('answers-area');
                 const progressBarFill = document.getElementById('progress-bar-fill');
                 const questionText = document.getElementById('question-text');
@@ -857,6 +879,7 @@
 
                 if (selectedButton.innerHTML === correctAnswer) {
                     score++;
+                    selectedButton.classList.add('correct');
                 } else {
                     selectedButton.classList.add('incorrect');
                 }
@@ -912,17 +935,15 @@
             };
             
             function quitGame() {
-                showScreen(dashboardContainer);
+                showScreen(landingContainer); // On quit, return to the main landing page
             };
 
-            // Event Listeners
-            if(playGameBtn) playGameBtn.addEventListener('click', startGame);
-            if(playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
-            if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
-            if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(dashboardContainer));
-            if(closeLibraryBtn) closeLibraryBtn.addEventListener('click', () => showScreen(landingContainer));
+            // --- Event Listeners ---
+            if (playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
+            if (exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(libraryContainer));
+            if (closeLibraryBtn) closeLibraryBtn.addEventListener('click', () => showScreen(landingContainer));
 
-            // Initial Render
+            // --- Initial Render ---
             renderAromaGrid(aromaLibraryData);
             showScreen(landingContainer);
         });
