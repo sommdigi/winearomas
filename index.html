@@ -980,10 +980,13 @@ font-family: var(--font-title);
             // Event Listeners
             if(playGameBtn) playGameBtn.addEventListener('click', startGame);
             if(playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
-            if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
-    renderAromaGrid(aromaLibraryData);
-});
-            if(closeLibraryBtn) closeLibraryBtn.addEventListener('click', () => showScreen(landingContainer));
+if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
+if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(dashboardContainer));
+
+            // Initial Render
+            renderAromaGrid(aromaLibraryData);
+            showScreen(landingContainer);
+        });
 
             // Initial Render
             renderAromaGrid(aromaLibraryData);
