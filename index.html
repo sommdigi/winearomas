@@ -977,11 +977,14 @@ font-family: var(--font-title);
     renderAromaGrid(aromaLibraryData);
 }
 
-            // Event Listeners
+         // Event Listeners
             if(playGameBtn) playGameBtn.addEventListener('click', startGame);
             if(playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
-if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
-if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(dashboardContainer));
+            if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => {
+                showScreen(dashboardContainer);
+                filterAndRender();
+            });
+            if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
 
             // Initial Render
             renderAromaGrid(aromaLibraryData);
