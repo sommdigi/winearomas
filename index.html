@@ -218,43 +218,49 @@
             margin-left: 15px;
         }
 
-        /* Aroma grid now uses fixed row height so every card appears the same size */
+        /* Aroma grid refined: square cards with consistent appearance */
         #aroma-grid {
             flex-grow: 1;
             padding: 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 25px;
             overflow-y: auto;
-            /* NEW */
-            grid-auto-rows: 160px; /* uniform card height */
         }
+
         .aroma-card {
-            background: #FFFFFF;
+            background: linear-gradient(135deg, #ffffff 0%, #faf9f8 100%);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            /* NEW layout improvements */
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
-            height: 100%; /* fill the fixed grid row */
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            aspect-ratio: 1 / 1; /* square cards regardless of content */
+            overflow: hidden; /* ensure uniform height */
         }
-        .aroma-card-name {
-            font-size: 1.2rem; /* slightly larger for readability */
-            font-weight: 600;
-            line-height: 1.3;
-            word-break: break-word;
-        }
-        
+
         .aroma-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             border-color: var(--brand-burgundy);
+        }
+
+        .aroma-card-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text-color);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* limit to 2 lines */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
         }
         
         /* --- Detail Card Modal --- */
@@ -475,7 +481,7 @@
             #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
             #search-bar { width: 100%; }
             /* Mobile grid tweaks: narrower columns & shorter rows */
-            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); grid-auto-rows: 130px; }
+            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
             .quiz-modal { padding: 20px; }
             #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
             #answers-area { grid-template-columns: 1fr; }
