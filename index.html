@@ -1176,31 +1176,21 @@
 +        #aroma-grid {
 +            flex-grow: 1;
 +            padding: 40px;
-+            display: grid !important;
-+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
-+            gap: 25px !important;
++            display: grid;
++            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
++            gap: 25px;
 +            overflow-y: auto;
-+            align-items: stretch !important;
-+            grid-auto-rows: 140px !important;
 +        }
 +        
 +        .aroma-card {
 +            background: #FFFFFF;
 +            border: 1px solid var(--border-color);
 +            border-radius: 12px;
-+            padding: 20px;
++            padding: 25px;
 +            text-align: center;
 +            cursor: pointer;
 +            transition: all 0.2s ease-in-out;
 +            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
-+            height: 140px !important;
-+            width: 100% !important;
-+            display: flex !important;
-+            align-items: center !important;
-+            justify-content: center !important;
-+            min-height: 140px !important;
-+            max-height: 140px !important;
-+            box-sizing: border-box !important;
 +        }
 +        
 +        .aroma-card:hover {
@@ -1210,17 +1200,8 @@
 +        }
 +        
 +        .aroma-card-name {
-+            font-size: 1.05rem !important;
-+            font-weight: 600 !important;
-+            line-height: 1.2 !important;
-+            word-wrap: break-word !important;
-+            hyphens: auto !important;
-+            text-align: center !important;
-+            width: 100% !important;
-+            overflow: hidden !important;
-+            display: -webkit-box !important;
-+            -webkit-line-clamp: 3 !important;
-+            -webkit-box-orient: vertical !important;
++            font-size: 1.25rem;
++            font-weight: 600;
 +        }
 +
 +        /* --- Detail Card Modal --- */
@@ -1305,16 +1286,6 @@
 +            border-color: var(--text-color);
 +        }
 +        
-+        .btn-result-secondary {
-+            background-color: transparent;
-+            color: var(--cream-text);
-+            border: 1px solid var(--cream-text);
-+        }
-+        .btn-result-secondary:hover {
-+            background-color: var(--cream-text);
-+            color: var(--brand-burgundy);
-+        }
-+        
 +        /* --- Quiz Modal --- */
 +        #quiz-container, #result-container {
 +            justify-content: center;
@@ -1343,25 +1314,14 @@
 +        .quit-button {
 +            font-size: 2.5rem;
 +            color: var(--cream-text);
-+            background: none;
-+            border: none;
-+            cursor: pointer;
 +        }
 +
 +        #progress-bar-full {
 +            background-color: rgba(245, 243, 239, 0.3);
-+            height: 8px;
-+            border-radius: 4px;
-+            flex-grow: 1;
-+            margin-right: 20px;
-+            overflow: hidden;
 +        }
 +
 +        #progress-bar-fill {
 +            background-color: var(--cream-text);
-+            height: 100%;
-+            width: 0%;
-+            transition: width 0.3s ease;
 +        }
 +
 +        #question-text {
@@ -1449,7 +1409,6 @@
 +        .btn-result {
 +            padding: 15px 30px;
 +            font-size: 1.1rem;
-+            margin: 0 10px 10px 0;
 +        }
 +
 +        /* --- Mobile Responsiveness --- */
@@ -1462,15 +1421,11 @@
 +            .sidebar-nav-item button { white-space: nowrap; }
 +            #dashboard-header { flex-direction: column; gap: 15px; padding: 15px; }
 +            #search-bar { width: 100%; }
-+            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important; grid-auto-rows: 120px !important; }
-+            .aroma-card { height: 120px !important; min-height: 120px !important; max-height: 120px !important; padding: 15px !important; }
-+            .aroma-card-name { font-size: 0.95rem !important; }
++            #aroma-grid { padding: 20px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 +            .quiz-modal { padding: 20px; }
 +            #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
 +            #answers-area { grid-template-columns: 1fr; }
 +            .answer-btn { padding: 15px; }
-+            #landing-container .main-title { font-size: 2.5rem; }
-+            #landing-container .cta-button-group { flex-direction: column; align-items: center; }
 +        }
 +    </style>
 +</head>
@@ -1722,7 +1677,7 @@
 +                resultContainer.classList.remove('is-visible');
 +                cardDetailContainer.classList.remove('is-visible');
 +                screen.classList.add('is-visible');
-+            }
++            };
 +
 +            function renderAromaGrid(data) {
 +                aromaGrid.innerHTML = '';
@@ -1819,7 +1774,7 @@
 +                currentQuestionIndex = 0;
 +                score = 0;
 +                showQuestion();
-+            }
++            };
 +
 +            function showQuestion() {
 +                const answersArea = document.getElementById('answers-area');
@@ -1842,7 +1797,7 @@
 +                    button.addEventListener('click', selectAnswer);
 +                    answersArea.appendChild(button);
 +                });
-+            }
++            };
 +
 +            function selectAnswer(e) {
 +                const selectedButton = e.target;
@@ -1870,7 +1825,7 @@
 +                        showResults();
 +                    }
 +                }, 1200);
-+            }
++            };
 +
 +            function showResults() {
 +                resultContainer.innerHTML = `
@@ -1910,11 +1865,11 @@
 +                }
 +                resultTitle.textContent = title;
 +                resultMessage.innerHTML = message;
-+            }
++            };
 +            
 +            function quitGame() {
 +                showScreen(dashboardContainer);
-+            }
++            };
 +
 +            // Event Listeners
 +            if(playGameBtn) playGameBtn.addEventListener('click', startGame);
