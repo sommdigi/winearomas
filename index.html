@@ -938,8 +938,9 @@
             };
             
             function quitGame() {
-                showScreen(dashboardContainer);
-            };
+    showScreen(dashboardContainer);
+    renderAromaGrid(aromaLibraryData);
+}
 
             // Event Listeners
             if(playGameBtn) playGameBtn.addEventListener('click', startGame);
