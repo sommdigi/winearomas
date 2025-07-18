@@ -342,6 +342,16 @@
             border-color: var(--text-color);
         }
         
+        .btn-result-secondary {
+            background-color: transparent;
+            color: var(--cream-text);
+            border: 1px solid var(--cream-text);
+        }
+        .btn-result-secondary:hover {
+            background-color: var(--cream-text);
+            color: var(--brand-burgundy);
+        }
+        
         /* --- Quiz Modal --- */
         #quiz-container, #result-container {
             justify-content: center;
@@ -370,14 +380,25 @@
         .quit-button {
             font-size: 2.5rem;
             color: var(--cream-text);
+            background: none;
+            border: none;
+            cursor: pointer;
         }
 
         #progress-bar-full {
             background-color: rgba(245, 243, 239, 0.3);
+            height: 8px;
+            border-radius: 4px;
+            flex-grow: 1;
+            margin-right: 20px;
+            overflow: hidden;
         }
 
         #progress-bar-fill {
             background-color: var(--cream-text);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         #question-text {
@@ -465,6 +486,7 @@
         .btn-result {
             padding: 15px 30px;
             font-size: 1.1rem;
+            margin: 0 10px 10px 0;
         }
 
         /* --- Mobile Responsiveness --- */
@@ -482,6 +504,8 @@
             #question-text { font-size: 1.4rem; min-height: 120px; margin-top: 20px; }
             #answers-area { grid-template-columns: 1fr; }
             .answer-btn { padding: 15px; }
+            #landing-container .main-title { font-size: 2.5rem; }
+            #landing-container .cta-button-group { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -615,7 +639,7 @@
                 { aromaName: 'Green Apple', category: 'Tree Fruit', wines: ['Riesling: Germany, e.g., Mosel (dry/off-dry).', 'Pinot Gris/Pinot Grigio: Italy (dry styles).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Sauvignon Blanc: Sancerre AOP (France).'], tip: 'Green apple aromas add crisp, fresh acidity, commonly found in youthful, high-acid white wines.'},
                 { aromaName: 'Yellow Apple', category: 'Tree Fruit', wines: ['Chenin Blanc: Loire Valley, e.g., Vouvray (France)', 'Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Chardonnay: Chablis (France), Sonoma Coast (USA), Côte de Beaune (France), Margaret River (Australia).', 'Marsanne & Roussanne: Northern Rhône, e.g., St. Joseph, Hermitage (France).', 'Grüner Veltliner: Austria, Klassik & Reserve styles', 'Sweet Wines: Tokaji Aszú (Hungary), Sauternes/Barsac (France).'], tip: 'Yellow apple aromas add mellow, rounded fruitiness, found in wines from moderate to warm climates.'},
                 { aromaName: 'Pear', category: 'Tree Fruit', wines: ['Pinot Grigio: Trentino, Alto Adige (Italy).', 'Melon de Bourgogne: Muscadet AOP (France).', 'Chardonnay (cool climate): Chablis AOP (France).'], tip: 'Pear aromas bring a crisp, delicate fruitiness, common in cool-climate white wines and dry whites from Italy and France.'},
-                { aromaName: 'Quince', category: 'Tree Fruit', wines: ['Viognier: Northern Rhône Valley, e.g., Condrieu AOP (France).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Riesling: Riper styles, e.g., Pfalz (Germany).', 'Chenin Blanc: Vouvray “Demi-Sec” or “Moelleux” (France), or dry from warmer vintages.', 'Pinot Gris/Pinot Grigio: Slightly sweeter styles (Italy).'], tip: 'Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines.'},
+                { aromaName: 'Quince', category: 'Tree Fruit', wines: ['Viognier: Northern Rhône Valley, e.g., Condrieu AOP (France).', 'Grüner Veltliner: Riper expressions, Smaragd or Reserve (Austria).', 'Riesling: Riper styles, e.g., Pfalz (Germany).', 'Chenin Blanc: Vouvray "Demi-Sec" or "Moelleux" (France), or dry from warmer vintages.', 'Pinot Gris/Pinot Grigio: Slightly sweeter styles (Italy).'], tip: 'Quince aromas bring a rich, exotic note, often found in riper or slightly sweet white wines.'},
                 { aromaName: 'White Peach', category: 'Tree Fruit', wines: ['Albariño/Alvarinho: Rías Baixas (Spain), Vinho Verde (Portugal).', 'Riesling: Germany (Kabinett from Mosel, Rheinhessen), Austria (Wachau, Kamptal, Kremstal).', 'Torrontés & Muscat: Alsace (France), Salta (Argentina).'], tip: 'White peach aromas add a juicy, fresh character, typical in vibrant, aromatic whites.'},
                 { aromaName: 'Peach', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau - Federspiel & Smaragd, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; riper peach notes often indicate warmer climates.', 'Gewürztraminer: Alsace (France), especially Vendange Tardive or Sélection de Grains Nobles.', 'Viognier: Northern Rhône Valley, Condrieu (France).'], tip: 'Peach aromas suggest ripeness and are often found in fuller, aromatic whites from warmer regions or those with residual sugar.'},
                 { aromaName: 'Nectarine', category: 'Tree Fruit', wines: ['Riesling: Riper styles, Austria (Wachau, Kamptal, Kremstal), Germany (Pfalz, Rheingau, Rheinhessen).', 'Chardonnay: Worldwide; warmer climates or vintages.', 'Gewürztraminer: Alsace AOP (France), Vendange Tardive, Sélection de Grains Nobles.', 'Viognier: Northern Rhône, Condrieu (France).'], tip: 'Nectarine notes suggest ripeness and warmth, typical in aromatic, rich white wines.'},
@@ -662,7 +686,7 @@
                 { aromaName: 'Basil', category: 'Herbal', wines: ['Riesling: Germany.', 'Muscat: Alsace (France).'], tip: 'Basil aromas can add a fresh, herbal quality to wines from cooler regions.' },
                 { aromaName: 'Lemongrass', category: 'Herbal', wines: ['Sauvignon Blanc: Various regions worldwide.', 'Viognier: Condrieu (France).'], tip: 'Lemongrass aromas contribute a zesty, citrusy freshness.' },
                 { aromaName: 'Parsley', category: 'Herbal', wines: ['Grüner Veltliner: Cooler vintages or less ripe examples from Austria.'], tip: 'Parsley aromas add a fresh, green note to Grüner Veltliner, often found in younger styles.' },
-                { aromaName: 'Chive', category: 'Herbal', wines: ['Cortese: Gavi di Gavi (Italy).', 'Pinot Grigio: Various regions worldwide.', 'Garganega: Soave (Italy)', 'Muscadet: Muscadet “sur lie” (France).'], tip: 'Chive aromas contribute a fresh, herbal character to white wines.' },
+                { aromaName: 'Chive', category: 'Herbal', wines: ['Cortese: Gavi di Gavi (Italy).', 'Pinot Grigio: Various regions worldwide.', 'Garganega: Soave (Italy)', 'Muscadet: Muscadet "sur lie" (France).'], tip: 'Chive aromas contribute a fresh, herbal character to white wines.' },
                 { aromaName: 'Blackcurrant Leaf', category: 'Herbal', wines: ['Sauvignon Blanc: New Zealand, Chile, South Africa', 'Verdejo: Rueda (Spain)'], tip: 'Blackcurrant leaf aromas impart a fresh, herbal character.' },
                 { aromaName: 'Rosemary', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Rosemary aromas add an herbal, aromatic complexity to wines from the Southern Rhône.' },
                 { aromaName: 'Thyme', category: 'Herbal', wines: ['Grenache: Southern Rhône Valley (France).', 'Syrah: Southern Rhône Valley (France).', 'Mourvèdre: Southern Rhône Valley (France).'], tip: 'Thyme aromas add an earthy, herbal note to Southern Rhône blends.' },
@@ -720,7 +744,6 @@
             const playGameBtnLanding = document.getElementById('play-game-btn-landing');
             const logo = document.querySelector('.sidebar-logo');
             const exploreLibraryBtn = document.getElementById('explore-library-btn');
-            const closeLibraryBtn = document.querySelector('.modal-close-btn');
 
             // Game State
             let currentQuestions = [];
@@ -734,7 +757,7 @@
                 resultContainer.classList.remove('is-visible');
                 cardDetailContainer.classList.remove('is-visible');
                 screen.classList.add('is-visible');
-            };
+            }
 
             function renderAromaGrid(data) {
                 aromaGrid.innerHTML = '';
@@ -831,7 +854,7 @@
                 currentQuestionIndex = 0;
                 score = 0;
                 showQuestion();
-            };
+            }
 
             function showQuestion() {
                 const answersArea = document.getElementById('answers-area');
@@ -854,7 +877,7 @@
                     button.addEventListener('click', selectAnswer);
                     answersArea.appendChild(button);
                 });
-            };
+            }
 
             function selectAnswer(e) {
                 const selectedButton = e.target;
@@ -882,7 +905,7 @@
                         showResults();
                     }
                 }, 1200);
-            };
+            }
 
             function showResults() {
                 resultContainer.innerHTML = `
@@ -922,18 +945,17 @@
                 }
                 resultTitle.textContent = title;
                 resultMessage.innerHTML = message;
-            };
+            }
             
             function quitGame() {
                 showScreen(dashboardContainer);
-            };
+            }
 
             // Event Listeners
             if(playGameBtn) playGameBtn.addEventListener('click', startGame);
             if(playGameBtnLanding) playGameBtnLanding.addEventListener('click', startGame);
             if(logo) logo.addEventListener('click', () => showScreen(landingContainer));
             if(exploreLibraryBtn) exploreLibraryBtn.addEventListener('click', () => showScreen(dashboardContainer));
-            if(closeLibraryBtn) closeLibraryBtn.addEventListener('click', () => showScreen(landingContainer));
 
             // Initial Render
             renderAromaGrid(aromaLibraryData);
