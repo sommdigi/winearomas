@@ -515,37 +515,146 @@ font-family: var(--font-title);
 
         /* --- Mobile Responsiveness --- */
 @media (max-width: 900px) {
-    /* Landing Page */
+    /* Landing Page Mobile */
     #landing-container .main-title {
         font-size: 3rem !important;
         font-weight: 900 !important;
         line-height: 0.9;
         margin: 15px 0;
+        text-align: center;
     }
     
-    .landing-content { padding: 20px 15px; }
-    .wine-glass-decoration { width: 60px !important; margin-bottom: 10px; }
-    #landing-container .subtitle { font-size: 0.85rem; padding: 0 15px; margin-top: 15px; }
-    #landing-container .cta-button-group { flex-direction: column; gap: 15px; margin-top: 30px; padding: 0 20px; }
-    .btn { width: 100%; padding: 16px 24px; font-size: 1rem; border-radius: 25px; }
+    .landing-content {
+        padding: 20px 15px;
+    }
     
-    /* Dashboard - SUPER SIMPLE */
-    #dashboard-sidebar { display: none !important; }
-    #dashboard-container { display: block !important; }
-    #dashboard-main { width: 100% !important; }
-    #dashboard-header { padding: 15px; text-align: center; }
-    #search-bar { width: 100%; padding: 12px 20px; margin-bottom: 15px; }
-    .header-actions { display: flex; gap: 10px; justify-content: center; }
-    .header-actions .btn { flex: 1; max-width: 120px; font-size: 0.8rem; padding: 10px; }
-    #aroma-grid { padding: 15px; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .aroma-card { height: 80px !important; padding: 10px !important; }
-    .aroma-card-name { font-size: 0.9rem !important; }
+    .wine-glass-decoration {
+        width: 60px !important;
+        margin-bottom: 10px;
+    }
     
-    /* Quiz */
-    .quiz-modal { padding: 20px 15px; margin: 10px; }
-    #question-text { font-size: 1.2rem; min-height: 100px; margin: 15px 0 20px 0; }
-    #answers-area { grid-template-columns: 1fr; gap: 12px; }
-    .answer-btn { padding: 15px; font-size: 0.95rem; }
+    #landing-container .subtitle {
+        font-size: 0.85rem;
+        padding: 0 15px;
+        margin-top: 15px;
+        line-height: 1.4;
+    }
+    
+    #landing-container .cta-button-group {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        padding: 0 20px;
+    }
+    
+    .btn {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 1rem;
+        border-radius: 25px;
+    }
+    
+    /* Dashboard Mobile - Simple with Home Button */
+    #dashboard-container {
+        flex-direction: column;
+    }
+    
+    #dashboard-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        background: rgba(255,255,255,0.95);
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sidebar-logo {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+    
+    .sidebar-nav {
+        display: none;
+    }
+    
+    .sidebar-nav-title {
+        display: none;
+    }
+    
+    #dashboard-main {
+        width: 100%;
+    }
+    
+    #dashboard-header {
+        padding: 15px;
+        text-align: center;
+    }
+    
+    #search-bar {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .header-actions .btn {
+        flex: 1;
+        max-width: 120px;
+        font-size: 0.8rem;
+        padding: 10px 12px;
+        margin-left: 0;
+    }
+    
+    #aroma-grid {
+        padding: 15px;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .aroma-card {
+        height: 80px !important;
+        padding: 10px !important;
+        border-radius: 8px;
+    }
+    
+    .aroma-card-name {
+        font-size: 0.9rem !important;
+        font-weight: 600;
+    }
+    
+    /* Quiz Mobile */
+    .quiz-modal {
+        padding: 20px 15px;
+        margin: 10px;
+    }
+    
+    #question-text {
+        font-size: 1.2rem;
+        min-height: 100px;
+        margin: 15px 0 20px 0;
+    }
+    
+    #answers-area {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .answer-btn {
+        padding: 15px;
+        font-size: 0.95rem;
+        border-radius: 8px;
+    }
 }
     </style>
 </head>
